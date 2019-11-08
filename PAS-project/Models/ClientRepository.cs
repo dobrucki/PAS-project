@@ -10,7 +10,8 @@ namespace PAS_project.Models
         
         public void Add(Client item)
         {
-            if(_clients.Any(client => client.Id == item.Id)) throw new Exception("Given client already exists!");
+            if (item is null) throw new Exception("Given client is null");
+            if (_clients.Any(client => client.Id == item.Id)) throw new Exception("Given client already exists!");
             _clients.Add(item);
         }
 
@@ -23,6 +24,7 @@ namespace PAS_project.Models
 
         public void Update(Client item, int id)
         {
+            if (item is null) throw new Exception("Given client is null!");
             try
             {
                 var index = _clients.FindIndex(client => client.Id == id);
