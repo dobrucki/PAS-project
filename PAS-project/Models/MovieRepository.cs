@@ -22,6 +22,11 @@ namespace PAS_project.Models
         return result;
     }
 
+    public IEnumerable<Movie> GetAll()
+    {
+        return _movies;
+    }
+
     public void Update(Movie item, int id)
     {
         if (item is null) throw new Exception("Given movie is null!");
