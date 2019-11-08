@@ -12,4 +12,8 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\PAS-project\PAS-project.csproj" />
+    </ItemGroup>
+
 </Project>
