@@ -22,6 +22,11 @@ namespace PAS_project.Models
             return result;
         }
 
+        public IEnumerable<Client> GetAll()
+        {
+            return _clients;
+        }
+
         public void Update(Client item, int id)
         {
             if (item is null) throw new Exception("Given client is null!");
