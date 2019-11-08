@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace PAS_project.Models
 {
-    public class Hall
+    public class Hall : IModel
     {
-        public int Number { get; set; }
+        public int Id { get; set; }
         private List<Seat> _seatsList;
         
         public Hall()

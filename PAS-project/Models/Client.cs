@@ -1,6 +1,6 @@
 namespace PAS_project.Models
 {
-    public abstract class Client
+    public abstract class Client : IModel
     {
         public int Id { get; set; }
         
