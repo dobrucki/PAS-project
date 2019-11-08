@@ -7,5 +7,6 @@ namespace PAS_project.Models
         DateTime EventTime { get; set; }
         Client BookingClient { get; set; }
         Seat BookedSeat { get; set; }
+        Seance BookedSeance { get; set; }
     }
 }
