@@ -27,28 +27,22 @@ namespace PAS_project.Models
             return _clients;
         }
 
-        public void Update(Client item, int id)
+        public void Update(Client updatedClient)
         {
-            if (item is null) throw new Exception("Given client is null!");
-            try
-            {
-                var index = _clients.FindIndex(client => client.Id == id);
-                _clients[index] = item;
-            }
-            catch (ArgumentNullException)
-            {
-                throw new Exception("Given id does not match any client!");
-            }
+            if (updatedClient is null) throw new Exception("Given client is null!");
+            var actualClient = _clients.FirstOrDefault(c => c.Id == updatedClient.Id);
+            if (actualClient is null) throw new Exception("Given id does not match any client!");
+            actualClient.Email = updatedClient.Email;
+            actualClient.Sex = updatedClient.Sex;
+            actualClient.FirstName = updatedClient.FirstName;
+            actualClient.LastName = updatedClient.LastName;
+            actualClient.PhoneNumber = updatedClient.PhoneNumber;
+            actualClient.ZipCode = updatedClient.PhoneNumber;
         }
 
-        public void Remove(int id)
+        public Client Delete(int id)
         {
-            _clients.Remove(Get(id));
-        }
-
-        public void Remove(Client item)
-        {
-            _clients.Remove(item);
+            
         }
     }
 }
