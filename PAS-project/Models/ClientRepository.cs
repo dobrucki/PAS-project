@@ -27,7 +27,7 @@ namespace PAS_project.Models
             return _clients;
         }
 
-        public void Update(Client updatedClient)
+        public Client Update(Client updatedClient)
         {
             if (updatedClient is null) throw new Exception("Given client is null!");
             var actualClient = _clients.FirstOrDefault(c => c.Id == updatedClient.Id);
@@ -38,6 +38,7 @@ namespace PAS_project.Models
             actualClient.LastName = updatedClient.LastName;
             actualClient.PhoneNumber = updatedClient.PhoneNumber;
             actualClient.ZipCode = updatedClient.PhoneNumber;
+            return actualClient;
         }
 
         public Client Delete(int id)
