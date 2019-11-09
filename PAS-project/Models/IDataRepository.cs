@@ -7,7 +7,7 @@ namespace PAS_project.Models
         void Add(T item);
         T Get(int id);
         IEnumerable<T> GetAll();
-        void Update(T item);
+        T Update(T item);
         T Delete(int id);
     }
     
