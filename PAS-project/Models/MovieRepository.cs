@@ -6,49 +6,43 @@ namespace PAS_project.Models
 {
     public class MovieRepository : IDataRepository<Movie>
     {
-    private readonly List<Movie> _movies = new List<Movie>();
+        private readonly List<Movie> _movies = new List<Movie>();
 
-    public void Add(Movie item)
-    {
-        if (item is null) throw new Exception("Given item is null");
-        if (_movies.Any(movie => movie.Id == item.Id)) throw new Exception("Given movie already exists!");
-        _movies.Add(item);
-    }
-
-    public Movie Get(int id)
-    {
-        var result = _movies.First(movie => movie.Id == id);
-        if (result is null) throw new Exception("Given id does not match any movie!");
-        return result;
-    }
-
-    public IEnumerable<Movie> GetAll()
-    {
-        return _movies;
-    }
-
-    public void Update(Movie item, int id)
-    {
-        if (item is null) throw new Exception("Given movie is null!");
-        try
+        public void Add(Movie item)
         {
-            var index = _movies.FindIndex(movie => movie.Id == id);
-            _movies[index] = item;
+            if (item is null) throw new Exception("Given item is null");
+            if (_movies.Any(movie => movie.Id == item.Id)) throw new Exception("Given movie already exists!");
+            _movies.Add(item);
         }
-        catch (ArgumentNullException)
+
+        public Movie Get(int id)
         {
-            throw new Exception("Given id does not match any movie!");
+            var result = _movies.First(movie => movie.Id == id);
+            if (result is null) throw new Exception("Given id does not match any movie!");
+            return result;
         }
-    }
 
-    public void Remove(int id)
-    {
-        _movies.Remove(Get(id));
-    }
+        public IEnumerable<Movie> GetAll()
+        {
+            return _movies;
+        }
 
-    public void Remove(Movie item)
-    {
-        _movies.Remove(item);
-    }
+        public Movie Update(Movie updatedMovie)
+        {
+            if (updatedMovie is null) throw new Exception("Given movie is null!");
+            var actualMovie = _movies.FirstOrDefault(m => m.Id == updatedMovie.Id);
+            if (actualMovie is null) throw new Exception("Given id does not match any movie!");
+            actualMovie.Description = updatedMovie.Description;
+            actualMovie.Title = updatedMovie.Title;
+            return actualMovie;
+        }
+
+        public Movie Delete(int id)
+        {
+            var foundMovie = _movies.FirstOrDefault(c => c.Id == id);
+            if(foundMovie is null) throw new Exception("Given id does not match any movie!");
+            _movies.Remove(foundMovie);
+            return foundMovie;
+        }
     }
 }
