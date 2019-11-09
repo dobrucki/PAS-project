@@ -42,7 +42,10 @@ namespace PAS_project.Models
 
         public Client Delete(int id)
         {
-            
+            var foundClient = _clients.FirstOrDefault(c => c.Id == id);
+            if(foundClient is null) throw new Exception("Given id does not match any client!");
+            _clients.Remove(foundClient);
+            return foundClient;
         }
     }
 }
