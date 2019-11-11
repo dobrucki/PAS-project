@@ -7,10 +7,10 @@ namespace PAS_project.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool Sex { get; set; }
-        
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string ZipCode { get; set; }
+        public bool Activity { get; set; }
 
         public Client(string firstName, string lastName, bool sex, string email, string phoneNumber, string zipCode)
         {
@@ -20,6 +20,7 @@ namespace PAS_project.Models
             Email = email;
             PhoneNumber = phoneNumber;
             ZipCode = zipCode;
+            Activity = true;
         }
     }
 }
