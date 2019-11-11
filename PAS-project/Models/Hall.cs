@@ -11,6 +11,12 @@ namespace PAS_project.Models
         {
             _seats = seats;
         }
+
+        public IEnumerable<Seat> GetAllSeats()
+        {
+            return _seats;
+        }
+        
         
     }
 }   
