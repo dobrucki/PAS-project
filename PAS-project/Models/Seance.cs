@@ -8,6 +8,6 @@ namespace PAS_project.Models
         public int DurationTime { get; set; }
         public DateTime SeanceDateTime { get; set; }
         public Hall ScreeningRoom { get; set; }
-        
+        public Movie ProjectedMovie { get; set; }
     }
 }
