@@ -8,11 +8,12 @@ namespace PAS_project.Models
     {
         private readonly List<Client> _clients = new List<Client>();
         
-        public void Add(Client item)
+        public Client Add(Client client)
         {
-            if (item is null) throw new Exception("Given client is null");
-            if (_clients.Any(client => client.Id == item.Id)) throw new Exception("Given client already exists!");
-            _clients.Add(item);
+            var id = _clients.Count == 0 ? 1 : _clients.Last().Id;
+            client.Id = id;
+            _clients.Add(client);
+            return client;
         }
 
         public Client Get(int id)

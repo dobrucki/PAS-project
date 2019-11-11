@@ -8,11 +8,12 @@ namespace PAS_project.Models
     {
         private readonly List<Movie> _movies = new List<Movie>();
 
-        public void Add(Movie item)
+        public Movie Add(Movie movie)
         {
-            if (item is null) throw new Exception("Given item is null");
-            if (_movies.Any(movie => movie.Id == item.Id)) throw new Exception("Given movie already exists!");
-            _movies.Add(item);
+            if (movie is null) throw new Exception("Given item is null");
+            if (_movies.Any(m => m.Id == movie.Id)) throw new Exception("Given movie already exists!");
+            _movies.Add(movie);
+            return movie;
         }
 
         public Movie Get(int id)

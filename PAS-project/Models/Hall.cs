@@ -5,11 +5,11 @@ namespace PAS_project.Models
     public class Hall : IModel
     {
         public int Id { get; set; }
-        private List<Seat> _seatsList;
+        private readonly IEnumerable<Seat> _seats;
         
-        public Hall()
+        public Hall(IEnumerable<Seat> seats)
         {
-            _seatsList = new List<Seat>();
+            _seats = seats;
         }
         
     }

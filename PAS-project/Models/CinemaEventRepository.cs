@@ -8,11 +8,13 @@ namespace PAS_project.Models
     {
         private readonly List<ICinemaEvent> _cinemaEvents = new List<ICinemaEvent>();
         
-        public void Add(ICinemaEvent cinemaEvent)
+        public ICinemaEvent Add(ICinemaEvent cinemaEvent)
         {
-            if (cinemaEvent is null) throw new Exception("Given cinemaEvent is null");
-            if (_cinemaEvents.Any(c => c.Id == cinemaEvent.Id)) throw new Exception("Given cinemaEvent already exists!");
+            var id = _cinemaEvents.Count == 0 ? 1 : _cinemaEvents.Last().Id;
+            cinemaEvent.Id = id;
+            cinemaEvent.EventTime = DateTime.UtcNow;
             _cinemaEvents.Add(cinemaEvent);
+            return cinemaEvent;
         }
 
         public ICinemaEvent Get(int id)
