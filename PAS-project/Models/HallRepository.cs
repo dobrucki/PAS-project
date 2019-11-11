@@ -4,16 +4,17 @@ using System.Linq;
 
 namespace PAS_project.Models
 {
-    public class HallRepository
+    public class HallRepository : IDataRepository<Hall>
     {
         private readonly List<Hall> _halls = new List<Hall>();
         
-        public void Add(Hall item)
+        public Hall Add(Hall hall)
 
         {
             var id = _halls.Count == 0 ? 1 : _halls.Last().Id+1;
-            item.Id = id;
-            _halls.Add(item);
+            hall.Id = id;
+            _halls.Add(hall);
+            return hall;
         }
 
         public Hall Get(int id)
