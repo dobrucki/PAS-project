@@ -10,8 +10,8 @@ namespace PAS_project.Models
 
         public Movie Add(Movie movie)
         {
-            if (movie is null) throw new Exception("Given item is null");
-            if (_movies.Any(m => m.Id == movie.Id)) throw new Exception("Given movie already exists!");
+            var id = _movies.Count == 0 ? 1 : _movies.Last().Id+1;
+            movie.Id = id;
             _movies.Add(movie);
             return movie;
         }
