@@ -10,7 +10,6 @@ namespace UnitTests
         {
             var client = new Client
             {
-                Id = 100,
                 Email = "wasilewski_98@o2.pl",
                 Sex = true,
                 FirstName = "Mateusz",
