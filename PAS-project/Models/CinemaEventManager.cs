@@ -21,7 +21,9 @@ namespace PAS_project.Models
                 throw new Exception("Invalid booking data");
             }
 
-            var events = _repository.GetAll().Where(e => e.BookedSeance == seance).Where(e => e.BookedSeat == seat);
+            var events = _repository.GetAll()
+                .Where(e => e.BookedSeance == seance)
+                .Where(e => e.BookedSeat == seat);
             if (events.Last().GetType() == typeof(BookingEvent))
             {
                 throw new Exception("Seat already booked");
@@ -49,10 +51,27 @@ namespace PAS_project.Models
 
         }
 
-        public IEnumerable<ICinemaEvent> BookingsForSpecificClient(Client client)
+        private IEnumerable<ICinemaEvent> BookingsForSpecificClient(Client client)
         {
-            return _repository.GetAll().Where(b => b.BookingClient == client)
+            return _repository.GetAll()
+                .Where(b => b.BookingClient == client)
                 .Where(b => b.GetType() == typeof(BookingEvent));
+        }
+
+        public IEnumerable<ICinemaEvent> ActiveBookingsForSpecificClient(Client client)
+        {
+            return BookingsForSpecificClient(client).Except(CanceledBookingsForSpecificClient(client));
+        }
+
+        public IEnumerable<ICinemaEvent> CanceledBookingsForSpecificClient(Client client)
+        {
+            var bookings = BookingsForSpecificClient(client).ToList();
+            var cancels = _repository.GetAll().Where(b => b.BookingClient == client).Except(bookings).ToList();
+            
+            var bookingsSeances = new HashSet<Seance>(bookings.Select(b => b.BookedSeance));
+            var canceledBookings = cancels.Where(c => bookingsSeances.Contains(c.BookedSeance));
+
+            return canceledBookings;
         }
     }
 }
