@@ -57,7 +57,7 @@ namespace PAS_project.Models
 
         public Client FilterByEmails(string email)
         {
-            var result = _repository.GetAll().First(cl => cl.Email == email);
+            var result = _repository.GetAll().FirstOrDefault(cl => cl.Email == email);
             if(result == null) throw new Exception("Given email does not match any client!");
             return result;
         }
