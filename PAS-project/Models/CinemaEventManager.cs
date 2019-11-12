@@ -31,5 +31,12 @@ namespace PAS_project.Models
             _repository.Add(bookingEvent);
             return bookingEvent;
         }
+
+
+        public IEnumerable<ICinemaEvent> BookingsForSpecificClient(Client client)
+        {
+            return _repository.GetAll().Where(b => b.BookingClient == client)
+                .Where(b => b.GetType() == typeof(BookingEvent));
+        }
     }
 }
