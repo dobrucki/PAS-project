@@ -10,7 +10,7 @@ namespace PAS_project.Models
         
         public ICinemaEvent Add(ICinemaEvent cinemaEvent)
         {
-            var id = _cinemaEvents.Count == 0 ? 1 : _cinemaEvents.Last().Id;
+            var id = _cinemaEvents.Count == 0 ? 1 : _cinemaEvents.Last().Id + 1;
             cinemaEvent.Id = id;
             cinemaEvent.EventTime = DateTime.UtcNow;
             _cinemaEvents.Add(cinemaEvent);
