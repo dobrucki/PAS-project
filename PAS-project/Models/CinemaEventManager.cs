@@ -31,5 +31,21 @@ namespace PAS_project.Models
             _repository.Add(bookingEvent);
             return bookingEvent;
         }
+
+        public CancelBookingEvent CancelBooking(BookingEvent bookingEvent)
+        {
+            var client = bookingEvent.BookingClient;
+            var seance = bookingEvent.BookedSeance;
+            var seat = bookingEvent.BookedSeat;
+
+            var events = _repository.GetAll()
+                .Where(e => e.BookingClient == client)
+                .Where(e => e.BookedSeance == seance)
+                .Where(e => e.BookedSeat == seat);
+            if (events.Last() != bookingEvent) throw new Exception("Could not cancel booking");
+            var cancel = new CancelBookingEvent(client, seat, seance);
+            _repository.Add(cancel);
+            return cancel;
+        }
     }
 }
