@@ -10,6 +10,7 @@ namespace PAS_project.Models
         
         public Client Add(Client client)
         {
+            if (_clients.Any(m => m.Id == client.Id)) throw new Exception("Given movie already exists!");
             var id = _clients.Count == 0 ? 1 : _clients.Last().Id;
             client.Id = id;
             _clients.Add(client);
@@ -30,7 +31,7 @@ namespace PAS_project.Models
 
         public Client Update(Client updatedClient)
         {
-            if (updatedClient is null) throw new Exception("Given client is null!");
+            
             var actualClient = _clients.FirstOrDefault(c => c.Id == updatedClient.Id);
             if (actualClient is null) throw new Exception("Given id does not match any client!");
             actualClient.Email = updatedClient.Email;
