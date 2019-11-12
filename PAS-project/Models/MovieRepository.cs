@@ -18,8 +18,7 @@ namespace PAS_project.Models
 
         public Movie Get(int id)
         {
-            var result = _movies.First(movie => movie.Id == id);
-            if (result is null) throw new Exception("Given id does not match any movie!");
+            var result = _movies.FirstOrDefault(movie => movie.Id == id);
             return result;
         }
 
@@ -30,7 +29,6 @@ namespace PAS_project.Models
 
         public Movie Update(Movie updatedMovie)
         {
-            if (updatedMovie is null) throw new Exception("Given movie is null!");
             var actualMovie = _movies.FirstOrDefault(m => m.Id == updatedMovie.Id);
             if (actualMovie is null) throw new Exception("Given id does not match any movie!");
             actualMovie.Description = updatedMovie.Description;
