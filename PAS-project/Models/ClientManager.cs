@@ -16,7 +16,8 @@ namespace PAS_project.Models
         public Client AddClient(Client client)
         {
             if(client is null) throw new Exception("Given client is null");
-            
+            if (_repository.GetAll().Any(m => m.Email == client.Email)) 
+                throw new Exception("Given client already exists!");
             _repository.Add(client);
             return client;
         }
@@ -43,13 +44,13 @@ namespace PAS_project.Models
             return _repository.Delete(id);
         }
 
-        public void ActiveClient(Client client)
+        public void ActivateClient(Client client)
         {
             if(client.Activity) throw new Exception("Given client is already activated!");
             client.Activity = true;
         }
 
-        public void DeactiveClient(Client client)
+        public void DeactivateClient(Client client)
         {
             if(client.Activity == false) throw new Exception("Given client is already deactivated!");
             client.Activity = false;
