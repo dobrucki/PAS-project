@@ -31,7 +31,6 @@ namespace PAS_project.Models
 
         public IEnumerable<Movie> GetAllMovies()
         {
-            if(!_repository.GetAll().Any()) throw new Exception("There is not any movie!");
             return _repository.GetAll();
         }
 

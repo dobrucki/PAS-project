@@ -16,13 +16,14 @@ namespace PAS_project.Models
         public Hall AddHall(Hall hall)
         {
             if (hall is null) throw new Exception("Given hall is null");
-            var newHallSeats = new HashSet<Seat>(hall.GetAllSeats());
             
-            
-            if (_repository.GetAll().Select(h => h.GetAllSeats().Any(x => newHallSeats.Contains(x))).Any(result => result == true))
+            if (_repository.GetAll().Select(h => h.GetAllSeats().Select(x => x)
+                .Intersect(hall.GetAllSeats())
+                .Any()).Any(hasMatch => hasMatch))
             {
-                return null;
+                throw new Exception("Hall with these seats already exist!");
             }
+
             _repository.Add(hall);
             return hall;
         }
@@ -36,7 +37,6 @@ namespace PAS_project.Models
 
         public IEnumerable<Hall> GetAllHalls()
         {
-            if(!_repository.GetAll().Any()) throw new Exception("There is not any Hall!");
             return _repository.GetAll();
         }
 
