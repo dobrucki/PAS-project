@@ -8,15 +8,14 @@ namespace UnitTests
     {
         private static Client GenerateFakeClient()
         {
-            var client = new Client
-            {
-                Email = "wasilewski_98@o2.pl",
-                Sex = true,
-                FirstName = "Mateusz",
-                LastName = "Wasilewski",
-                PhoneNumber = "530060645",
-                ZipCode = "92-525"
-            };
+            var client = new Client(
+                "Mateusz",
+                "Wasilewski",
+                true,
+                "wasil_98@o2.pl",
+                "530060645",
+                "92-525"
+            );
             return client;
         }
 
