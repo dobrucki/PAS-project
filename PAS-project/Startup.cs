@@ -27,7 +27,14 @@ namespace PAS_project
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            // Dependency Injection
             services.AddSingleton<IDataRepository<ICinemaEvent>, CinemaEventRepository>();
+            services.AddSingleton<IDataRepository<Movie>, MovieRepository>();
+            services.AddSingleton<MovieManager, MovieManager>();
+            services.AddSingleton<IDataRepository<Seance>, SeanceRepository>();
+            services.AddSingleton<SeanceManager, SeanceManager>();
+            services.AddSingleton<IDataRepository<Hall>, HallRepository>();
+            services.AddSingleton<HallManager, HallManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

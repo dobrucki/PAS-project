@@ -7,10 +7,21 @@ namespace PAS_project.Models
     public class SeanceManager
     {
         private readonly IDataRepository<Seance> _repository;
+        private readonly HallManager _hallManager;
+        private readonly MovieManager _movieManager;
 
-        public SeanceManager(IDataRepository<Seance> repository)
+        public SeanceManager(IDataRepository<Seance> repository, HallManager hallManager, MovieManager movieManager)
         {
             _repository = repository;
+            _hallManager = hallManager;
+            _movieManager = movieManager;
+            var hall = _hallManager.GetAllHalls().FirstOrDefault();
+            var movie1 = _movieManager.GetAllMovies().FirstOrDefault();
+            var movie2 = _movieManager.GetAllMovies().LastOrDefault();
+            var seance1 = new Seance(120, DateTime.Now, hall, movie1);
+            var seance2 = new Seance(110, DateTime.Now, hall, movie2);
+            AddSeance(seance1);
+            AddSeance(seance2);
         }
         
         public Seance AddSeance(Seance seance)

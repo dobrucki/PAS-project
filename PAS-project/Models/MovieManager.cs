@@ -11,6 +11,11 @@ namespace PAS_project.Models
         public MovieManager(IDataRepository<Movie> repository)
         {
             _repository = repository;
+            var movie1 = new Movie("Wasil cwel", "Wasil to cwel");
+            var movie2 = new Movie("Wasil chuj", "Wasil to chuj");
+
+            AddMovie(movie1);
+            AddMovie(movie2);
         }
         
         public Movie AddMovie(Movie movie)

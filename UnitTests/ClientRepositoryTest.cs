@@ -4,11 +4,11 @@ using PAS_project.Models;
 namespace UnitTests
 {
     [TestFixture]
-    public class ClientRepositoryTest
+    public class UserRepositoryTest
     {
-        private static Client GenerateFakeClient()
+        private static User GenerateFakeUser()
         {
-            var client = new Client(
+            var user = new User(
                 "Mateusz",
                 "Wasilewski",
                 true,
@@ -16,26 +16,26 @@ namespace UnitTests
                 "530060645",
                 "92-525"
             );
-            return client;
+            return user;
         }
 
         [Test]
-        public void Get_ClientById_ReturnsClientObject()
+        public void Get_UserById_ReturnsUserObject()
         {
-            var repository = new ClientRepository();
+            var repository = new UserRepository();
             
         }
         
         [Test]
-        public void Add_ClientObject_ObjectAddedToList()
+        public void Add_UserObject_ObjectAddedToList()
         {
             // Arrange
-            var repository = new ClientRepository();
-            var client = GenerateFakeClient();
+            var repository = new UserRepository();
+            var user = GenerateFakeUser();
             // Act
-            repository.Add(client);
+            repository.Add(user);
             // Assert
-            Assert.AreEqual(client, repository.Get(client.Id));
+            Assert.AreEqual(user, repository.Get(user.Id));
         }
     }
 }

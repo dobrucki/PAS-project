@@ -6,13 +6,13 @@ namespace PAS_project.Models
     {
         public int Id { get; set; }
         public DateTime EventTime { get; set; }
-        public Client BookingClient { get; set; }
+        public User BookingUser { get; set; }
         public Seat BookedSeat { get; set; }
         public Seance BookedSeance { get; set; }
 
-        public BookingEvent(Client bookingClient, Seat bookedSeat, Seance bookedSeance)
+        public BookingEvent(User bookingUser, Seat bookedSeat, Seance bookedSeance)
         {
-            BookingClient = bookingClient;
+            BookingUser = bookingUser;
             BookedSeat = bookedSeat;
             BookedSeance = bookedSeance;
         }

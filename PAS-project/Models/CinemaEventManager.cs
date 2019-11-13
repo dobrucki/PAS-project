@@ -14,9 +14,9 @@ namespace PAS_project.Models
             _repository = repository;
         }
 
-        public BookingEvent MakeABooking(Client client, Seance seance, Seat seat)
+        public BookingEvent MakeABooking(User user, Seance seance, Seat seat)
         {
-            if (client is null || seance is null || seat is null)
+            if (user is null || seance is null || seat is null)
             {
                 throw new Exception("Invalid booking data");
             }
@@ -24,54 +24,53 @@ namespace PAS_project.Models
             var events = _repository.GetAll()
                 .Where(e => e.BookedSeance == seance)
                 .Where(e => e.BookedSeat == seat);
-            if (events.Last().GetType() == typeof(BookingEvent))
+            if (events.LastOrDefault()?.GetType() == typeof(BookingEvent))
             {
                 throw new Exception("Seat already booked");
             }
 
-            var bookingEvent = new BookingEvent(client, seat, seance);
+            var bookingEvent = new BookingEvent(user, seat, seance);
             _repository.Add(bookingEvent);
             return bookingEvent;
         }
 
         public CancelBookingEvent CancelBooking(BookingEvent bookingEvent)
         {
-            var client = bookingEvent.BookingClient;
+            var user = bookingEvent.BookingUser;
             var seance = bookingEvent.BookedSeance;
             var seat = bookingEvent.BookedSeat;
 
             var events = _repository.GetAll()
-                .Where(e => e.BookingClient == client)
+                .Where(e => e.BookingUser == user)
                 .Where(e => e.BookedSeance == seance)
                 .Where(e => e.BookedSeat == seat);
             if (events.Last() != bookingEvent) throw new Exception("Could not cancel booking");
-            var cancel = new CancelBookingEvent(client, seat, seance);
+            var cancel = new CancelBookingEvent(user, seat, seance);
             _repository.Add(cancel);
             return cancel;
 
         }
 
-        private IEnumerable<ICinemaEvent> BookingsForSpecificClient(Client client)
+        private IEnumerable<ICinemaEvent> BookingsForSpecificUser(User user)
         {
             return _repository.GetAll()
-                .Where(b => b.BookingClient == client)
+                .Where(b => b.BookingUser == user)
                 .Where(b => b.GetType() == typeof(BookingEvent));
         }
 
-        public IEnumerable<ICinemaEvent> ActiveBookingsForSpecificClient(Client client)
+        public IEnumerable<ICinemaEvent> ActiveBookingsForSpecificUser(User user)
         {
-            return BookingsForSpecificClient(client).Except(CanceledBookingsForSpecificClient(client));
+            var events = _repository.GetAll().Where(e => e.BookingUser == user).ToList();
+            var activeBookings = events.GroupBy(@event => (@event.BookedSeance, @event.BookedSeat))
+                .Select(grp => grp.LastOrDefault()).OfType<BookingEvent>().ToList();
+            return activeBookings;
         }
 
-        public IEnumerable<ICinemaEvent> CanceledBookingsForSpecificClient(Client client)
+        public IEnumerable<ICinemaEvent> CanceledBookingsForSpecificUser(User user)
         {
-            var bookings = BookingsForSpecificClient(client).ToList();
-            var cancels = _repository.GetAll().Where(b => b.BookingClient == client).Except(bookings).ToList();
-            
-            var bookingsSeances = new HashSet<Seance>(bookings.Select(b => b.BookedSeance));
-            var canceledBookings = cancels.Where(c => bookingsSeances.Contains(c.BookedSeance));
-
-            return canceledBookings;
+            var bookings = _repository.GetAll().OfType<BookingEvent>().ToList();
+            var activeBookings = ActiveBookingsForSpecificUser(user);
+            return bookings.Except(activeBookings);
         }
     }
 }
