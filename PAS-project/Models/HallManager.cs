@@ -11,6 +11,10 @@ namespace PAS_project.Models
         public HallManager(IDataRepository<Hall> repository)
         {
             _repository = repository;
+            var seats = new List<Seat>();
+            var hall = new Hall(seats);
+            seats.Add(new Seat('A', 1, hall));
+            AddHall(hall);
         }
         
         public Hall AddHall(Hall hall)

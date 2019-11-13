@@ -1,0 +1,18 @@
+@using System.Data
+@model object
+
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head></head>
+<body>
+<h1>Movies:</h1>
+    @foreach (var movie in ViewBag.Movies)
+    {
+        <li>@movie.Title</li>
+    }
+</body>
+</html>
