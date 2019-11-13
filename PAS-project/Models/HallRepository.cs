@@ -34,14 +34,16 @@ namespace PAS_project.Models
             if (actualHall is null) throw new Exception("Given id does not match any Hall!");
             var actualSeatList = actualHall.GetAllSeats().ToList();
             var updatedSeatList = updatedHall.GetAllSeats().ToList();
-            for (var i = 0; i < updatedSeatList.Count(); i++)
+
+            for (var i = 0; i < actualSeatList.Count; i++)
             {
-                if (updatedSeatList[i] != actualSeatList[i])
-                {
-                    actualSeatList[i] = updatedSeatList[i];
-                }
+                actualSeatList[i].Number = updatedSeatList[i].Number;
+                actualSeatList[i].Row = updatedSeatList[i].Row;
+                actualSeatList[i].ScreeningRoom = updatedSeatList[i].ScreeningRoom;
+                
             }
-            return actualHall;
+
+            return updatedHall;
         }
 
         public Hall Delete(int id)

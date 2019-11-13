@@ -92,10 +92,13 @@ namespace UnitTests
             
             var hallManager = new HallManager(new HallRepository());
             
-            var testHall = GenerateTestHall();
-            hallManager.AddHall(testHall);
-            testHall.GetAllSeats().ToList()[0].Row = 'Y';
-            hallManager.UpdateHall(testHall);
+            var testHall1 = GenerateTestHall();
+            hallManager.AddHall(testHall1);
+            var testHall2 = GenerateTestHall();
+            testHall2.Id = 1;
+            
+            testHall2.GetAllSeats().ToList()[0].Row = 'Y';
+            hallManager.UpdateHall(testHall2);
             
 
             Assert.AreEqual('Y', 
