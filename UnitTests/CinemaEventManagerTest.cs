@@ -9,7 +9,7 @@ namespace UnitTests
     [TestFixture]
     public class CinemaEventManagerTest
     {
-        private Client _client;
+        private User _user;
         private List<Seat> _seats;
         private Hall _hall;
         private Seat _seat;
@@ -21,8 +21,8 @@ namespace UnitTests
         
         private void ArrangeObjects()
         {
-            _client = 
-                new Client(
+            _user = 
+                new User(
                     "Mateusz", 
                     "Wasilewski", 
                     true, "wasil_98@o2.pl", 
@@ -54,9 +54,9 @@ namespace UnitTests
             // Arrange
             ArrangeObjects();
             // Act
-            var bookingEvent = _manager.MakeABooking(_client, _seance, _seat);
+            var bookingEvent = _manager.MakeABooking(_user, _seance, _seat);
             // Assert
-            Assert.AreSame(bookingEvent, _manager.ActiveBookingsForSpecificClient(_client).FirstOrDefault());
+            Assert.AreSame(bookingEvent, _manager.ActiveBookingsForSpecificUser(_user).FirstOrDefault());
         }
         
         [Test]
@@ -64,7 +64,7 @@ namespace UnitTests
         {
             // Arrange
             ArrangeObjects();
-            var bookingEvent = _manager.MakeABooking(_client, _seance, _seat);
+            var bookingEvent = _manager.MakeABooking(_user, _seance, _seat);
             // Act
             var cancelBookingEvent = _manager.CancelBooking(bookingEvent);
             // Assert
@@ -72,41 +72,41 @@ namespace UnitTests
         }
 
         [Test]
-        public void ActiveBookingsForSpecificClient_CorrectParams_ReturnsActiveBookings()
+        public void ActiveBookingsForSpecificUser_CorrectParams_ReturnsActiveBookings()
         {
             // Arrange
             ArrangeObjects();
-            var @event = _manager.MakeABooking(_client, _seance, _seat);
+            var @event = _manager.MakeABooking(_user, _seance, _seat);
             // Act
-            var events = _manager.ActiveBookingsForSpecificClient(_client);
+            var events = _manager.ActiveBookingsForSpecificUser(_user);
             // Assert
             Assert.AreSame(@event, events.LastOrDefault());
         }
         
         [Test]
-        public void ActiveBookingsForSpecificClient_CorrectParams_ReturnsNotCanceledBookings()
+        public void ActiveBookingsForSpecificUser_CorrectParams_ReturnsNotCanceledBookings()
         {
             // Arrange
             ArrangeObjects();
-            var @event = _manager.MakeABooking(_client, _seance, _seat);
+            var @event = _manager.MakeABooking(_user, _seance, _seat);
             var cancelEvent = _manager.CancelBooking(@event);
-            var newEvent = _manager.MakeABooking(_client, _seance, _seat);
+            var newEvent = _manager.MakeABooking(_user, _seance, _seat);
             // Act
-            var events = _manager.ActiveBookingsForSpecificClient(_client).ToList();
+            var events = _manager.ActiveBookingsForSpecificUser(_user).ToList();
             // Assert
             Assert.AreEqual(1, events.Count);
             Assert.AreSame(newEvent, events.LastOrDefault());
         }
 
         [Test]
-        public void CanceledBookingEventsForSpecificClient_CorrectParams_ReturnsCanceledBookings()
+        public void CanceledBookingEventsForSpecificUser_CorrectParams_ReturnsCanceledBookings()
         {
             // Arrange
             ArrangeObjects();
-            var @event = _manager.MakeABooking(_client, _seance, _seat);
+            var @event = _manager.MakeABooking(_user, _seance, _seat);
             var cancelEvent = _manager.CancelBooking(@event);
             // Act
-            var bookings = _manager.CanceledBookingsForSpecificClient(_client).ToList();
+            var bookings = _manager.CanceledBookingsForSpecificUser(_user).ToList();
             // Assert
             Assert.AreEqual(@event, bookings.LastOrDefault());
         }

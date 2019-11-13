@@ -1,6 +1,6 @@
 namespace PAS_project.Models
 {
-    public class Client : IModel
+    public class User : IModel
     {
         public int Id { get; set; }
         
@@ -12,7 +12,7 @@ namespace PAS_project.Models
         public string ZipCode { get; set; }
         public bool Activity { get; set; }
 
-        public Client(string firstName, string lastName, bool sex, string email, string phoneNumber, string zipCode)
+        public User(string firstName, string lastName, bool sex, string email, string phoneNumber, string zipCode)
         {
             FirstName = firstName;
             LastName = lastName;

@@ -36,7 +36,7 @@ namespace PAS_project.Models
             if (actualCinemaEvent is null) throw new Exception("Given id does not match any client!");
             actualCinemaEvent.BookedSeance = updatedCinemaEvent.BookedSeance;
             actualCinemaEvent.BookedSeat = updatedCinemaEvent.BookedSeat;
-            actualCinemaEvent.BookingClient = updatedCinemaEvent.BookingClient;
+            actualCinemaEvent.BookingUser = updatedCinemaEvent.BookingUser;
             actualCinemaEvent.EventTime = updatedCinemaEvent.EventTime;
             return  actualCinemaEvent;
         }
