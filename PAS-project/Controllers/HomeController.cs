@@ -27,9 +27,8 @@ namespace PAS_project.Controllers
         public ViewResult Movies()
         {
             var movies = _movieManager.GetAllMovies();
-            ViewBag.Movies = movies;
             ViewData["Title"] = "Movies";
-            return View();
+            return View(movies);
         }
 
         public ViewResult Seances()

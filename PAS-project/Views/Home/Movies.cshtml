@@ -1,5 +1,5 @@
 @using System.Data
-@model object
+@model IEnumerable<PAS_project.Models.Movie>
 
 @{
     Layout = "_Layout";
@@ -10,7 +10,7 @@
 <head></head>
 <body>
 <h1>Movies:</h1>
-    @foreach (var movie in ViewBag.Movies)
+    @foreach (var movie in Model)
     {
         <li>@movie.Title</li>
     }

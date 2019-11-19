@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace PAS_project.Models
 {
-    public class User : IModel
+    public class User : IdentityUser, IModel
     {
         public int Id { get; set; }
 
