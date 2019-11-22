@@ -5,8 +5,4 @@
         <RootNamespace>PAS_project</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="Views\Auth" />
-    </ItemGroup>
-
 </Project>
