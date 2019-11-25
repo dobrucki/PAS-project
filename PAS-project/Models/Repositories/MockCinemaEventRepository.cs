@@ -1,41 +1,48 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using PAS_project.Models.Entities;
 
+[assembly: InternalsVisibleTo("UnitTests")]
 namespace PAS_project.Models.Repositories
 {
     internal class MockCinemaEventRepository : IDataRepository<CinemaEvent>
     {
         private readonly List<CinemaEvent> _cinemaEvents = new List<CinemaEvent>();
         
-        public CinemaEvent Add(CinemaEvent item)
+        public void Add(CinemaEvent cinemaEvent)
         {
-            _cinemaEvents.Add(item);
-            return item;
+            _cinemaEvents.Add(cinemaEvent);
         }
 
-        public CinemaEvent Get(int id)
+        public CinemaEvent GetById(int id)
         {
             return _cinemaEvents.LastOrDefault(e => e.Id == id);
         }
 
+        public IEnumerable<CinemaEvent> GetAll(Func<CinemaEvent, bool> predicate)
+        {
+            return _cinemaEvents.Where(predicate).AsEnumerable();
+        }
+
         public IEnumerable<CinemaEvent> GetAll()
         {
-            return _cinemaEvents;
+            return _cinemaEvents.AsEnumerable();
         }
 
-        public CinemaEvent Update(CinemaEvent item)
+        public void Update(CinemaEvent cinemaEvent)
         {
-            var query = _cinemaEvents.LastOrDefault(e => e.Id == item.Id);
-            if (query is null) return null;
-            query.Seance = item.Seance;
-            query.Seat = item.Seat;
-            return query;
+            var previousEvent = GetById(cinemaEvent.Id);
+            previousEvent.Seance = cinemaEvent.Seance;
+            previousEvent.Seat = cinemaEvent.Seat;
+            previousEvent.User = cinemaEvent.User;
         }
 
-        public CinemaEvent Delete(int id)
+        public void Delete(CinemaEvent cinemaEvent)
         {
-            throw new System.NotImplementedException();
+            _cinemaEvents.Remove(cinemaEvent);
         }
     }
 }

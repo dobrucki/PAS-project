@@ -1,13 +1,16 @@
+using System;
 using System.Collections.Generic;
+using PAS_project.Models.Entities;
 
 namespace PAS_project.Models.Repositories
 {
-    public interface IDataRepository<T>
+    public interface IDataRepository<T> where T : Entity
     {
-        T Add(T item);
-        T Get(int id);
+        void Add(T item);
+        T GetById(int id);
         IEnumerable<T> GetAll();
-        T Update(T item);
-        T Delete(int id);
+        IEnumerable<T> GetAll(Func<T, bool> predicate);
+        void Update(T item);
+        void Delete(T item);
     }
 }

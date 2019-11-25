@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using PAS_project.Models.Entities;
 
@@ -5,29 +6,34 @@ namespace PAS_project.Models.Repositories
 {
     internal class MockUserRepository : IDataRepository<User>
     {
-        public User Add(User item)
+        public void Add(User item)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public User Get(int id)
+        public User GetById(int id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public IEnumerable<User> GetAll()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public User Update(User item)
+        public IEnumerable<User> GetAll(Func<User, bool> predicate)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public User Delete(int id)
+        public void Update(User item)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        public void Delete(User item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

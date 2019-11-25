@@ -2,7 +2,7 @@ using PAS_project.Models.Entities.UserTypes;
 
 namespace PAS_project.Models.Entities
 {
-    public class User
+    public class User : Entity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

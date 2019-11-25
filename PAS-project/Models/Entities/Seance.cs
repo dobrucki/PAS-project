@@ -2,7 +2,7 @@ using System;
 
 namespace PAS_project.Models.Entities
 {
-    public class Seance
+    public class Seance : Entity
     {
         public Movie Movie { get; set; }
         public DateTime StartingTime { get; set; }

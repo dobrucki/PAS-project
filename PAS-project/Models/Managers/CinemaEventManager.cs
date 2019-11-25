@@ -21,21 +21,34 @@ namespace PAS_project.Models.Managers
                 .Where(e => e.Seance == seance)
                 .Where(e => e.Seat == seat)
                 .ToList();
-            if (correspondingEvents.Any() && correspondingEvents.Last().EventType != EventType.Cancel)
+            if (correspondingEvents.Any())
             {
                 return null;
             }
-
-            if ((seance.StartingTime - DateTime.UtcNow).Minutes <= user.UserType.MinutesForBooking) return null;
+            if ((seance.StartingTime - DateTime.UtcNow).Minutes <= user.UserType.MinutesForBooking)
+            {
+                return null;
+            }
             var cinemaEvent = new CinemaEvent
             {
+                // ReSharper disable once PossibleNullReferenceException
                 Id = events.LastOrDefault() is null ? 1 : events.LastOrDefault().Id + 1,
-                EventType = EventType.Booking,
-                Seance = seance,
-                User = user
+                User = user,
+                Seat = seat,
+                Seance = seance
             };
             _cinemaEventRepository.Add(cinemaEvent);
             return cinemaEvent;
         }
+
+        public void CancelABooking(CinemaEvent cinemaEvent)
+        {
+            if ((cinemaEvent.Seance.StartingTime - DateTime.UtcNow)
+                .Minutes <= cinemaEvent.User.UserType.MinutesForCancelling)
+            {
+                _cinemaEventRepository.Delete(cinemaEvent);
+            }
+        }
+        
     }
 }
