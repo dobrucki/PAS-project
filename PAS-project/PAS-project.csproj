@@ -5,4 +5,10 @@
         <RootNamespace>PAS_project</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Home\Movies.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Home\Seances.cshtml" />
+    </ItemGroup>
+
 </Project>

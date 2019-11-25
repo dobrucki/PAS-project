@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace PAS_project.Models
+namespace PAS_project.Models.Repositories
 {
-    public interface IDataRepository<T> where T : IModel
+    public interface IDataRepository<T>
     {
         T Add(T item);
         T Get(int id);
@@ -10,5 +10,4 @@ namespace PAS_project.Models
         T Update(T item);
         T Delete(int id);
     }
-    
 }
