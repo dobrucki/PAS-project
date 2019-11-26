@@ -8,10 +8,20 @@ namespace PAS_project.Models.Entities
         public string LastName { get; set; }
         public string Email { get; set; }
         public IUserType UserType { get; set; }
+        public UserAccessLevel AccessLevel { get; set; }
+        public bool Active { get; set; }
+        
     }
 
     namespace UserTypes
     {
+        public enum UserAccessLevel
+        {
+            Basic,
+            Employee,
+            Administrator
+        }
+        
         public interface IUserType
         {
             int MinutesForBooking { get; }

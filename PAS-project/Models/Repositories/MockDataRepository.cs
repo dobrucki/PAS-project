@@ -6,7 +6,7 @@ using PAS_project.Models.Entities;
 
 namespace PAS_project.Models.Repositories
 {
-    public class MockDataRepository<T> : IDataRepository<T> where T : Entity
+    internal class MockDataRepository<T> : IDataRepository<T> where T : Entity
     {
         private readonly Dictionary<int, T> _entities;
 
