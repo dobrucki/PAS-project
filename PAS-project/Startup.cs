@@ -12,6 +12,9 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using PAS_project.Controllers;
 using PAS_project.Models;
+using PAS_project.Models.Entities;
+using PAS_project.Models.Managers;
+using PAS_project.Models.Repositories;
 
 namespace PAS_project
 {
@@ -28,6 +31,10 @@ namespace PAS_project
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            
+            // DI
+            services.AddSingleton<IDataRepository<Movie>, MockDataRepository<Movie>>();
+            services.AddSingleton<MovieManager, MovieManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

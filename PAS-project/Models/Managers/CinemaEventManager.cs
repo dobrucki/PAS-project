@@ -17,6 +17,7 @@ namespace PAS_project.Models.Managers
 
         public CinemaEvent CreateABooking(User user, Seance seance, CinemaHall.Seat seat)
         {
+            if (user.Active is false) return null;
             var events = _cinemaEventRepository.GetAll().ToList();
             var correspondingEvents = events
                 .Where(e => e.Seance == seance)
@@ -44,6 +45,7 @@ namespace PAS_project.Models.Managers
 
         public void CancelABooking(CinemaEvent cinemaEvent)
         {
+            if (cinemaEvent.User.Active is false) return;
             if ((cinemaEvent.Seance.StartingTime - DateTime.UtcNow)
                 .Minutes <= cinemaEvent.User.UserType.MinutesForCancelling)
             {

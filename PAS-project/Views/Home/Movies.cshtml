@@ -1,0 +1,22 @@
+@model IEnumerable<PAS_project.Models.Entities.Movie>
+
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div>
+    <ul>
+        <li>xd</li>
+        @foreach (var movie in Model)
+        {
+            <li>@movie.Title</li>
+        }
+    </ul>
+</div>
+</body>
+</html>
