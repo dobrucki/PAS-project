@@ -35,12 +35,12 @@ namespace PAS_project.Models.Managers
             return _movieRepository.GetAll();
         }
         
-        public void Updatemovie(Movie movie)
+        public void UpdateMovie(Movie movie)
         {
             _movieRepository.Update(movie);
         }
 
-        public void Deletemovie(Movie movie)
+        public void DeleteMovie(Movie movie)
         {
             _movieRepository.Delete(movie);
         }
