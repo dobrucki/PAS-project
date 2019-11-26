@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace PAS_project.Models.Entities
 {
-    public class CinemaHall
+    public class CinemaHall : Entity
     {
         public class Seat
         {

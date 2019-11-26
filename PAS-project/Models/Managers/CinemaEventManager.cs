@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using PAS_project.Models.Entities;
 using PAS_project.Models.Repositories;
@@ -49,6 +50,25 @@ namespace PAS_project.Models.Managers
                 _cinemaEventRepository.Delete(cinemaEvent);
             }
         }
+
+        public IEnumerable<CinemaEvent> SearchAllBookings()
+        {
+            return _cinemaEventRepository.GetAll();
+        }
+
+        public IEnumerable<CinemaEvent> SearchByUser(User user)
+        {
+            bool Filter(CinemaEvent e) => e.User == user;
+            return _cinemaEventRepository.GetAll(Filter);
+        }
+
+        public IEnumerable<CinemaEvent> SearchBySeance(Seance seance)
+        {
+            bool Filter(CinemaEvent e) => e.Seance == seance;
+            return _cinemaEventRepository.GetAll(Filter);
+        }
+        
+        
         
     }
 }

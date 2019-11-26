@@ -16,4 +16,8 @@
       <ProjectReference Include="..\PAS-project\PAS-project.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Models\Managers" />
+    </ItemGroup>
+
 </Project>
