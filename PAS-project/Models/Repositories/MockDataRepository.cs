@@ -37,7 +37,10 @@ namespace PAS_project.Models.Repositories
         public void Update(T entity)
         {
             var actualEntity = GetById(entity.Id);
-            if (actualEntity is null || actualEntity.GetType() != entity.GetType()) return;
+            if (actualEntity is null || actualEntity.GetType() != entity.GetType())
+            {
+                throw new ArgumentException("Invalid argument");
+            }
             var props = actualEntity.GetType().GetProperties();
             var newProps = entity.GetType().GetProperties();
             for (var i = 0; i < props.Length; i++)
