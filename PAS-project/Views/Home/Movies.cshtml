@@ -3,11 +3,11 @@
 @{
     ViewBag.Title = "Movies";
 }
+<ul>
+    <li>xd</li>
+    @foreach (var movie in Model)
+    {
+        <li>@movie.Title</li>
+    }
+</ul>
 
-    <ul>
-        <li>xd</li>
-        @foreach (var movie in Model)
-        {
-            <li>@movie.Title</li>
-        }
-    </ul>
