@@ -1,6 +1,6 @@
 namespace PAS_project.Models.Entities
 {
-    public class Movie
+    public class Movie : Entity
     {
         public string Title { get; set; }
         public string Description { get; set; }
