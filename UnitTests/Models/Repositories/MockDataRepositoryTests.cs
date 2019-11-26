@@ -54,7 +54,7 @@ namespace UnitTests.Models.Repositories
         }
 
         [Test]
-        public void GetById_NotValidId_ObjectReturned()
+        public void GetById_NotValidId_NullObjectReturned()
         {
             // Arrange
             var repository = new MockDataRepository<User>();
@@ -66,6 +66,23 @@ namespace UnitTests.Models.Repositories
             
             // Assert
             Assert.IsNull(User());
+        }
+
+        [Test]
+        public void Update_ValidArgument_NoExceptionsThrown()
+        {
+            // Arrange
+            var repository = new MockDataRepository<User>();
+            var user = new User {Id = 100, Email = "john@example.com"};
+            const string updatedEmail = "jedrzej@example.com";
+            var updatedUser = new User {Id = 100, Email = updatedEmail};
+            repository.Add(user);
+            
+            // Act
+            repository.Update(updatedUser);
+            
+            // Assert
+            Assert.AreEqual(updatedEmail, repository.GetById(100).Email);
         }
     }
 }

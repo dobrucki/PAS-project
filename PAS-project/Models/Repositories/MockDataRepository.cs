@@ -44,7 +44,7 @@ namespace PAS_project.Models.Repositories
             {
                 if (props[i].CanWrite)
                 {
-                    props[i] = newProps[i];
+                    props[i].SetValue(actualEntity, newProps[i].GetValue(entity));
                 }
             }
         }
