@@ -26,8 +26,8 @@ namespace PAS_project.Models.Managers
 
         public Movie GetMovieByTitle(string title)
         {
-            var movies = _movieRepository.GetAll();
-            return movies.FirstOrDefault(entity => entity.Title == title);
+            bool Filter(Movie movie) => movie.Title == title; 
+            return _movieRepository.GetAll(Filter).First();
         }
 
         public IEnumerable<Movie> GetAllMovies()

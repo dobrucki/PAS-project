@@ -26,7 +26,8 @@ namespace PAS_project.Models.Managers
 
         public User GetUserByEmail(string email)
         {
-            return _userRepository.GetAll().FirstOrDefault(entity => entity.Email == email);
+            bool Filter(User user) => user.Email == email; 
+            return _userRepository.GetAll(Filter).First();
         }
 
         public IEnumerable<User> GetAllUsers()

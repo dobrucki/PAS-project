@@ -23,11 +23,6 @@ namespace PAS_project.Models.Managers
         {
             return _cinemaHallRepository.GetById(id);
         }
-        
-        public CinemaHall GetCinemaHallBySeance(Seance seance)
-        {
-            return _cinemaHallRepository.GetAll().FirstOrDefault(entity => entity.Seance == seance);
-        }
 
         public IEnumerable<CinemaHall> GetAllCinemaHalls()
         {

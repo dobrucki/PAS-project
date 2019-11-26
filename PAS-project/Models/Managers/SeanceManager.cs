@@ -27,7 +27,8 @@ namespace PAS_project.Models.Managers
         public Seance GetSeanceByMovie(Movie movie)
         {
 
-            return _seanceRepository.GetAll().FirstOrDefault(entity => entity.Movie == movie);
+            bool Filter(Seance seance) => seance.Movie == movie; 
+            return _seanceRepository.GetAll(Filter).First();
         }
         
         public IEnumerable<Seance> GetAllSeances()
