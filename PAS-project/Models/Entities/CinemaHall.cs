@@ -12,6 +12,6 @@ namespace PAS_project.Models.Entities
         
         public string Name { get; set; }
         public IEnumerable<Seat> Seats { get; set; }
-        
+
     }
 }

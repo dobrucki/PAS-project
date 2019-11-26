@@ -26,8 +26,8 @@ namespace PAS_project.Models.Managers
 
         public Movie GetMovieByTitle(string title)
         {
-            var movies = _movieRepository.GetAll();
-            return movies.FirstOrDefault(entity => entity.Title == title);
+            bool Filter(Movie movie) => movie.Title == title; 
+            return _movieRepository.GetAll(Filter).First();
         }
 
         public IEnumerable<Movie> GetAllMovies()
@@ -35,12 +35,12 @@ namespace PAS_project.Models.Managers
             return _movieRepository.GetAll();
         }
         
-        public void Updatemovie(Movie movie)
+        public void UpdateMovie(Movie movie)
         {
             _movieRepository.Update(movie);
         }
 
-        public void Deletemovie(Movie movie)
+        public void DeleteMovie(Movie movie)
         {
             _movieRepository.Delete(movie);
         }

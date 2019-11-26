@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using PAS_project.Models.Entities;
 using PAS_project.Models.Repositories;
+using System.Linq;
 
 namespace PAS_project.Models.Managers
 {
@@ -21,6 +22,13 @@ namespace PAS_project.Models.Managers
         public Seance GetSeanceById(int id)
         {
             return _seanceRepository.GetById(id);
+        }
+
+        public Seance GetSeanceByMovie(Movie movie)
+        {
+
+            bool Filter(Seance seance) => seance.Movie == movie; 
+            return _seanceRepository.GetAll(Filter).First();
         }
         
         public IEnumerable<Seance> GetAllSeances()
