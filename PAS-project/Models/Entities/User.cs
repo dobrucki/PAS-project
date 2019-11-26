@@ -9,7 +9,7 @@ namespace PAS_project.Models.Entities
         public string Email { get; set; }
         public IUserType UserType { get; set; }
         public UserAccessLevel AccessLevel { get; set; }
-        public bool Active { get; set; }
+        public bool Activity { get; set; }
         
     }
 
