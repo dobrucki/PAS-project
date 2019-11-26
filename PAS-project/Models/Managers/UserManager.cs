@@ -47,12 +47,12 @@ namespace PAS_project.Models.Managers
 
         public void ActivateUser(User user)
         {
-            _userRepository.GetById(user.Id).Activity = true;
+            _userRepository.GetById(user.Id).Active = true;
         }
         
         public void DeActivateUser(User user)
         {
-            _userRepository.GetById(user.Id).Activity = false;
+            _userRepository.GetById(user.Id).Active = false;
         }
     }
 }

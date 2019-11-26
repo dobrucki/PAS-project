@@ -2,14 +2,10 @@
 
 @{
     Layout = "_Layout";
+    ViewBag.Title = "Movies";
+    
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-</head>
-<body>
-<div>
     <ul>
         <li>xd</li>
         @foreach (var movie in Model)
@@ -17,6 +13,3 @@
             <li>@movie.Title</li>
         }
     </ul>
-</div>
-</body>
-</html>
