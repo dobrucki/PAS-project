@@ -39,6 +39,9 @@ namespace PAS_project
             services.AddSingleton<IDataRepository<Seance>>(
                 x => ActivatorUtilities.CreateInstance<MockDataRepository<Seance>>(x, 20000));
             services.AddSingleton<SeanceManager, SeanceManager>();
+            services.AddSingleton<IDataRepository<User>>(
+                x => ActivatorUtilities.CreateInstance<MockDataRepository<User>>(x, 30000));
+            services.AddSingleton<UserManager, UserManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
