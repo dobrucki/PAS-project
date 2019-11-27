@@ -33,8 +33,12 @@ namespace PAS_project
             services.AddMvc();
             
             // DI
-            services.AddSingleton<IDataRepository<Movie>, MockDataRepository<Movie>>();
+            services.AddSingleton<IDataRepository<Movie>>(
+                x => ActivatorUtilities.CreateInstance<MockDataRepository<Movie>>(x, 10000));
             services.AddSingleton<MovieManager, MovieManager>();
+            services.AddSingleton<IDataRepository<Seance>>(
+                x => ActivatorUtilities.CreateInstance<MockDataRepository<Seance>>(x, 20000));
+            services.AddSingleton<SeanceManager, SeanceManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

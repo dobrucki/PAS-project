@@ -9,13 +9,17 @@ namespace PAS_project.Models.Repositories
     internal class MockDataRepository<T> : IDataRepository<T> where T : Entity
     {
         private readonly Dictionary<int, T> _entities;
+        private int lastId;
 
-        public MockDataRepository()
+        public MockDataRepository(int startingId = 0)
         {
+            lastId = startingId;
             _entities = new Dictionary<int, T>();
         }
         public void Add(T entity)
         {
+            entity.Id = lastId + 1;
+            lastId += 1;
             _entities.Add(entity.Id, entity);
         }
 

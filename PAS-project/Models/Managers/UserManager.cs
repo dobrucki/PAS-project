@@ -11,6 +11,10 @@ namespace PAS_project.Models.Managers
 
         public UserManager(IDataRepository<User> userRepository)
         {
+            for (var i = 0; i < 10; i++)
+            {
+                userRepository.Add(RandomDataFactory.CreateRandomUser());
+            }
             _userRepository = userRepository;
         }
 
@@ -38,11 +42,6 @@ namespace PAS_project.Models.Managers
         public void UpdateUser(User user)
         {
             _userRepository.Update(user);
-        }
-
-        public void DeleteUser(User user)
-        {
-            _userRepository.Delete(user);
         }
 
         public void ActivateUser(User user)

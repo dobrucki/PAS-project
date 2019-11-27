@@ -1,0 +1,8 @@
+@model IEnumerable<Seance>;
+
+<div class="list-group">
+    @foreach (var seance in Model)
+    {
+        <a class="list-group-item list-group-item-action py-3 my-2">ID: @seance.Id | Tytuł: @seance.Movie.Title | Godzina: @seance.StartingTime</a>
+    }
+</div>
