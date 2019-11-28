@@ -21,24 +21,10 @@ namespace PAS_project.Controllers
             _seanceManager = seanceManager;
             _userManager = userManager;
         }
-
-
+        
         public ActionResult Index()
         {
             return View();
-        }
-
-        public ActionResult Movies()
-        {
-            var movies = _movieManager.GetAllMovies();
-            return View(movies);
-        }
-
-
-        public ActionResult Seances()
-        {
-            var seances = _seanceManager.GetAllSeances();
-            return View(seances);
         }
 
         [HttpGet]
@@ -52,7 +38,7 @@ namespace PAS_project.Controllers
         {
             if (!ModelState.IsValid) return View();
             _userManager.AddUser(user);
-            return RedirectToAction("Movies");
+            return RedirectToAction("Index");
 
         }
     }

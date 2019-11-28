@@ -26,7 +26,12 @@ namespace PAS_project.Models.Managers
         public static Movie CreateRandomMovie()
         {
             var random = new Random();
-            string[] titles = {"Skazani na Shawshank", "Zielona mila", "Król lew", "Gwiezdne wojny", "Lessie wróć"};
+            string[] titles =
+            {
+                "Skazani na Shawshank", "Zielona mila", "Król lew", "Gwiezdne wojny", "Lessie wróć",
+                "Władca pierścieni", "Darknight rises", "The Town", "Robotnicy wychodzący z fabryki",
+                "Kraina Lodu 2", "Shrek", "Rio", "Joker"
+            };
             return new Movie
             {
                 Description =
@@ -43,10 +48,12 @@ namespace PAS_project.Models.Managers
         public static Seance CreateRandomSeance(Movie movie)
         {
             var random = new Random();
+            var time = DateTime.UtcNow;
+            time = new DateTime(time.Year, time.Month, time.Day, time.Hour, 0, 0);
             return new Seance
             {
                 Movie = movie,
-                StartingTime = DateTime.UtcNow.AddHours(random.Next(8, 120))
+                StartingTime = time.AddMinutes(15 * random.Next(5, 23))
             };
         }
     }

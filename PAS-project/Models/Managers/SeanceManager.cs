@@ -8,19 +8,26 @@ namespace PAS_project.Models.Managers
     public class SeanceManager
     {
         private readonly IDataRepository<Seance> _seanceRepository;
+        private readonly IDataRepository<Movie> _movieRepository;
 
-        public SeanceManager(IDataRepository<Seance> seanceRepository)
+        public SeanceManager(IDataRepository<Seance> seanceRepository, IDataRepository<Movie> movieRepository)
         {
             var movie1 = RandomDataFactory.CreateRandomMovie();
             var movie2 = RandomDataFactory.CreateRandomMovie();
+            var movie3 = RandomDataFactory.CreateRandomMovie();
+            
+            movieRepository.Add(movie1);
+            movieRepository.Add(movie2);
+            movieRepository.Add(movie3);
             
             seanceRepository.Add(RandomDataFactory.CreateRandomSeance(movie1));
-            seanceRepository.Add(RandomDataFactory.CreateRandomSeance(movie1));
-            seanceRepository.Add(RandomDataFactory.CreateRandomSeance(movie1));
             seanceRepository.Add(RandomDataFactory.CreateRandomSeance(movie2));
             seanceRepository.Add(RandomDataFactory.CreateRandomSeance(movie2));
+            seanceRepository.Add(RandomDataFactory.CreateRandomSeance(movie3));
+            
 
             _seanceRepository = seanceRepository;
+            _movieRepository = movieRepository;
         }
 
         public void AddSeance(Seance seance)
