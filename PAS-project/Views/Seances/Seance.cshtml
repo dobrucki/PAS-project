@@ -1,5 +1,23 @@
 @model Seance
 
-<div class="container">
-    @Model.Movie.Title
+<div class="container mt-4">
+    <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-lg-6">
+            <h class="display-2">@Model.Movie.Title</h>
+            <p class="p-2">@Model.Movie.Description</p>
+        </div>
+        <div class="col-lg-5">
+            <img src="https://dummyimage.com/380x520/000/fff&text=Movie" alt="Movie" class="img-fluid">
+        </div>
+    </div>
+    <div class="row mt-2 px-2 d-flex justify-content-center">
+            <p class="p-1 px-3">@Model.StartingTime.ToString("t") |
+                @Model.StartingTime.AddMinutes(Model.Movie.DurationTime).ToString("t")</p>
+    
+        </div>
+    <div class="row px-2 d-flex justify-content-center">
+        <button class="btn btn-lg btn-info mx-4">Edit</button>
+        <button class="btn btn-lg btn-primary mx-4">Book it</button>
+        <button class="btn btn-lg btn-danger mx-4">Delete</button>
+    </div>
 </div>

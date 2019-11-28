@@ -36,8 +36,17 @@ namespace PAS_project.Models.Managers
             {
                 Description =
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-                    "Donec pretium faucibus tortor, at mollis ante pulvinar ac" +
-                    ". Pellentesque habitant morbi.",
+                    "Curabitur ullamcorper tempor sem, eu consequat ex. " +
+                    "Nunc pellentesque vestibulum facilisis. " +
+                    "Duis quam tortor, vulputate nec rhoncus ornare, ultrices vel lorem. " +
+                    "Cras consequat nunc dolor, sit amet pulvinar erat ultrices eget. " +
+                    "Sed mi dui, accumsan efficitur lorem id, pulvinar varius nulla. " +
+                    "Sed ultricies velit eget justo egestas condimentum. " +
+                    "Suspendisse in ante vitae dui ultrices pharetra blandit porta eros. " +
+                    "Cras urna massa, maximus eget ultrices a, cursus vel enim. " +
+                    "Quisque vehicula arcu sed velit fermentum imperdiet. " +
+                    "Donec et nunc augue. Proin lacinia fermentum orci quis pulvinar. " +
+                    "Sed convallis nulla diam, vitae tempus lectus.",
                 DurationTime = random.Next(80, 180),
                 Title = titles[random.Next(titles.Length)]
             };
