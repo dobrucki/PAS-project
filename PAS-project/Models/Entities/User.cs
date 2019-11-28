@@ -55,6 +55,11 @@ namespace PAS_project.Models.Entities
                 MinutesForBooking = 15;
                 MinutesForCancelling = 30;
             }
+
+            public override string ToString()
+            {
+                return "Standard";
+            }
         }
 
         internal class VipUserType : IUserType
@@ -66,6 +71,11 @@ namespace PAS_project.Models.Entities
             {
                 MinutesForBooking = 5;
                 MinutesForCancelling = 15;
+            }
+            
+            public override string ToString()
+            {
+                return "Vip";
             }
         }
     }
