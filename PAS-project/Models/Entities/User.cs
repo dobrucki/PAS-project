@@ -4,6 +4,8 @@ namespace PAS_project.Models.Entities
 {
     public class User : Entity
     {
+        internal static readonly IUserType StandardUserType = new StandardUserType();
+        internal static readonly IUserType VipUserType = new VipUserType();
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
@@ -11,6 +13,11 @@ namespace PAS_project.Models.Entities
         public IUserType UserType { get; set; }
         public UserAccessLevel AccessLevel { get; set; }
         public bool Active { get; set; }
+
+        public User()
+        {
+            UserType = StandardUserType;
+        }
         
     }
 
