@@ -26,20 +26,6 @@ namespace PAS_project.Controllers
         {
             return View();
         }
-
-        [HttpGet]
-        public ViewResult SignUp()
-        {
-            return View();
-        }
         
-        [HttpPost] 
-        public IActionResult SignUp(User user)
-        {
-            if (!ModelState.IsValid) return View();
-            _userManager.AddUser(user);
-            return RedirectToAction("Index");
-
-        }
     }
 }
