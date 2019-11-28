@@ -5,6 +5,9 @@ namespace PAS_project.Models.Entities
 {
     public class User : Entity
     {
+
+        internal static readonly IUserType StandardUserType = new StandardUserType();
+        internal static readonly IUserType VipUserType = new VipUserType();
         [Required]
         [StringLength(50, ErrorMessage = "First name length can't be more than 50.")]
         [Display(Name = "First Name")]
@@ -19,6 +22,11 @@ namespace PAS_project.Models.Entities
         public IUserType UserType { get; set; }
         public UserAccessLevel AccessLevel { get; set; }
         public bool Active { get; set; }
+
+        public User()
+        {
+            UserType = StandardUserType;
+        }
         
     }
 

@@ -4,20 +4,27 @@
 }
 
 <div class="container list-group mt-4">
-    <ul>
+      <form class="input-group" asp-controller="Seances" asp-action="All" method="get">
+        <input type="text" name="title" class="form-control" placeholder="Wyszukaj seans po tytule filmu">
+        <div class="input-group-append">
+          <button class="btn btn-secondary" type="submit">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </form>
     @foreach (var seance in Model)
-    {
-        <a asp-controller="Seances" asp-action="Seance" asp-route-id="@seance.Id" class="text-dark btn list-group-item d-flex justify-content-between align-items-center p-2 my-3">
-            <div class="p-1">
-                <div class="image-parent d-inline-block">
-                    <img src="https://dummyimage.com/120x140/000/fff.png&text=Movie" class="img-fluid" alt="movie">
+        {
+            <a asp-controller="Seances" asp-action="Seance" asp-route-id="@seance.Id" 
+               class="text-dark btn list-group-item d-flex justify-content-between align-items-center p-2 my-3">
+                <div class="p-1">
+                    <div class="image-parent d-inline-block">
+                        <img src="https://dummyimage.com/120x140/000/fff.png&text=Movie" class="img-fluid" alt="movie">
+                    </div>
+                    <h5 class="d-inline-block ml-3 px-2">@seance.Movie.Title</h5>
                 </div>
-                <h5 class="d-inline-block ml-3 px-2">@seance.Movie.Title</h5>
-            </div>
-            <h5 class="p-2">
-                Godzina: @seance.StartingTime.ToString("t")
-            </h5>
-        </a>
-    }
-    </ul>
+                <h5 class="p-2">
+                    Godzina: @seance.StartingTime.ToString("t")
+                </h5>
+            </a>
+        }
 </div>

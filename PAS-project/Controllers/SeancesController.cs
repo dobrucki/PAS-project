@@ -18,7 +18,8 @@ namespace PAS_project.Controllers
         public ActionResult All(string title=null)
         {
             var seances = _seanceManager.GetAllSeances().ToList();
-            if (!string.IsNullOrEmpty(title)) seances = seances.Where(s => s.Movie.Title == title).ToList();
+            if (!string.IsNullOrEmpty(title)) seances = seances
+                .Where(s => s.Movie.Title.ToLower().Contains(title.ToLower())).ToList();
             if (seances.Any())
             {
                 return View(seances.OrderBy(x => x.StartingTime));

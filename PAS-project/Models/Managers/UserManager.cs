@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PAS_project.Models.Entities;
+using PAS_project.Models.Entities.UserTypes;
 using PAS_project.Models.Repositories;
 
 namespace PAS_project.Models.Managers

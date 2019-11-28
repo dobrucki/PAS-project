@@ -15,15 +15,25 @@ namespace PAS_project.Models.Managers
             var movie1 = RandomDataFactory.CreateRandomMovie();
             var movie2 = RandomDataFactory.CreateRandomMovie();
             var movie3 = RandomDataFactory.CreateRandomMovie();
+            var movie4 = RandomDataFactory.CreateRandomMovie();
+            var movie5 = RandomDataFactory.CreateRandomMovie();
             
             movieRepository.Add(movie1);
             movieRepository.Add(movie2);
             movieRepository.Add(movie3);
+            movieRepository.Add(movie4);
+            movieRepository.Add(movie5);
             
+            
+            seanceRepository.Add(RandomDataFactory.CreateRandomSeance(movie4));
             seanceRepository.Add(RandomDataFactory.CreateRandomSeance(movie1));
+            seanceRepository.Add(RandomDataFactory.CreateRandomSeance(movie5));
             seanceRepository.Add(RandomDataFactory.CreateRandomSeance(movie2));
             seanceRepository.Add(RandomDataFactory.CreateRandomSeance(movie2));
             seanceRepository.Add(RandomDataFactory.CreateRandomSeance(movie3));
+            seanceRepository.Add(RandomDataFactory.CreateRandomSeance(movie4));
+            seanceRepository.Add(RandomDataFactory.CreateRandomSeance(movie4));
+            seanceRepository.Add(RandomDataFactory.CreateRandomSeance(movie5));
             
 
             _seanceRepository = seanceRepository;
