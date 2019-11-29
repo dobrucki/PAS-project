@@ -10,9 +10,16 @@ namespace PAS_project.Models.Managers
     {
         private IDataRepository<CinemaEvent> _cinemaEventRepository;
 
-        public CinemaEventManager(IDataRepository<CinemaEvent> cinemaEventRepository)
+        public CinemaEventManager(IDataRepository<CinemaEvent> cinemaEventRepository, IDataContext dataContext)
         {
             _cinemaEventRepository = cinemaEventRepository;
+            if (!(dataContext is null))
+            {
+                foreach (var c in dataContext.CinemaEvents)
+                {
+                    _cinemaEventRepository.Add(c);
+                }
+            }
         }
 
         public CinemaEvent CreateABooking(User user, Seance seance, CinemaHall.Seat seat)

@@ -9,9 +9,16 @@ namespace PAS_project.Models.Managers
     {
         private readonly IDataRepository<CinemaHall> _cinemaHallRepository;
 
-        public CinemaHallManager(IDataRepository<CinemaHall> cinemaHallRepository)
+        public CinemaHallManager(IDataRepository<CinemaHall> cinemaHallRepository, IDataContext dataContext)
         {
             _cinemaHallRepository = cinemaHallRepository;
+            if (!(dataContext is null))
+            {
+                foreach (var s in dataContext.CinemaHalls)
+                {
+                    _cinemaHallRepository.Add(s);
+                }
+            }
         }
 
         public void AddCinemaHall(CinemaHall cinemaHall)

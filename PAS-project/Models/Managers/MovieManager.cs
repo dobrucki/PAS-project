@@ -9,9 +9,16 @@ namespace PAS_project.Models.Managers
     {
         private readonly IDataRepository<Movie> _movieRepository;
 
-        public MovieManager(IDataRepository<Movie> movieRepository)
+        public MovieManager(IDataRepository<Movie> movieRepository, IDataContext dataContext)
         {
             _movieRepository = movieRepository;
+            if (!(dataContext is null))
+            {
+                foreach (var m in dataContext.Movies)
+                {
+                    _movieRepository.Add(m);
+                }
+            }
         }
 
         public void AddMovie(Movie movie)

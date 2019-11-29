@@ -10,13 +10,16 @@ namespace PAS_project.Models.Managers
     {
         private readonly IDataRepository<User> _userRepository;
 
-        public UserManager(IDataRepository<User> userRepository)
+        public UserManager(IDataRepository<User> userRepository, IDataContext dataContext)
         {
-            for (var i = 0; i < 10; i++)
-            {
-                userRepository.Add(RandomDataFactory.CreateRandomUser());
-            }
             _userRepository = userRepository;
+            if (!(dataContext is null))
+            {
+                foreach (var u in dataContext.Users)
+                {
+                    _userRepository.Add(u);
+                }
+            }
         }
 
         public void AddUser(User user)

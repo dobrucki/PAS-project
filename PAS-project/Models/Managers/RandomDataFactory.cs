@@ -1,12 +1,25 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using PAS_project.Models.Entities;
+using PAS_project.Models.Repositories;
 
 namespace PAS_project.Models.Managers
 {
     internal static class RandomDataFactory
     {
-        public static User CreateRandomUser()
+        public class DataWrapper
+        {
+            public IEnumerable<User> Users { get; internal set; }
+            public IEnumerable<Movie> Movies { get; internal set; }
+            public IEnumerable<Seance> Seances { get; internal set; }
+            public IEnumerable<CinemaHall> CinemaHalls { get; internal set; }
+            public IEnumerable<CinemaEvent> CinemaEvents { get; internal set;}
+        }
+        
+        private static User CreateRandomUser()
         {
             string[] firstNames = {"Michał", "Mateusz", "Kamil", "Alojzy", "Sebastian", "Krystian", "Szymon"};
             string[] lastNames = {"Kowalski", "Wasilewski", "Dobrucki", "Celejewski", "Nowak", "Trzmiel"};
@@ -23,7 +36,7 @@ namespace PAS_project.Models.Managers
             };
         }
 
-        public static Movie CreateRandomMovie()
+        private static Movie CreateRandomMovie()
         {
             var random = new Random();
             string[] titles =
@@ -51,10 +64,31 @@ namespace PAS_project.Models.Managers
                 Title = titles[random.Next(titles.Length)]
             };
         }
-        
-        
 
-        public static Seance CreateRandomSeance(Movie movie)
+        private static CinemaHall CreateRandomCinemaHall()
+        {
+            var random = new Random();
+            var seats = new List<CinemaHall.Seat>();
+            for (var i = 0; i < random.Next(6, 12); i++)
+            {
+                for (var j = 0; j < random.Next(12, 28); j++)
+                {
+                    seats.Add(new CinemaHall.Seat
+                    {
+                        Row = i,
+                        Column = j
+                    });
+                }
+            }
+
+            return new CinemaHall
+            {
+                Name = "Screening room",
+                Seats = seats
+            };
+        }
+
+        private static Seance CreateRandomSeance(Movie movie, CinemaHall cinemaHall)
         {
             var random = new Random();
             var time = DateTime.UtcNow;
@@ -62,7 +96,82 @@ namespace PAS_project.Models.Managers
             return new Seance
             {
                 Movie = movie,
+                CinemaHall = cinemaHall,
                 StartingTime = time.AddMinutes(15 * random.Next(5, 23))
+            };
+        }
+
+        private static CinemaEvent CreateRandomCinemaEvent(User user, CinemaHall cinemaHall, Seance seance)
+        {
+            var random = new Random();
+            return new CinemaEvent
+            {
+                User = user,
+                Seat = cinemaHall.Seats.ToList()[random.Next(cinemaHall.Seats.Count())],
+                Seance = seance
+            };
+        }
+
+        public static DataContext GenerateRandomData()
+        {
+            var random = new Random();
+            
+            var users = new List<User>();
+            for (var i = 0; i < random.Next(5, 15); i++)
+            {
+                users.Add(CreateRandomUser());
+            }
+
+            var movies = new List<Movie>();
+            for (var i = 0; i < random.Next(3, 8); i++)
+            {
+                movies.Add(CreateRandomMovie());
+            }
+            
+            var cinemaHalls = new List<CinemaHall>();
+            for (var i = 0; i < random.Next(2, 5); i++)
+            {
+                cinemaHalls.Add(CreateRandomCinemaHall());
+            }
+            
+            var seances = new List<Seance>();
+            foreach (var movie in movies)
+            {
+                for (var i = 0; i < random.Next(2, 5); i++)
+                {
+                    var seance = CreateRandomSeance(movie, cinemaHalls[random.Next(cinemaHalls.Count)]);
+                    bool TimeOverlapFilter(Seance s) =>
+                        s.CinemaHall.Id == seance.CinemaHall.Id
+                        && s.StartingTime < seance.StartingTime.AddMinutes(movie.DurationTime)
+                        && seance.StartingTime < s.StartingTime.AddMinutes(movie.DurationTime);
+                    if (seances.Any(TimeOverlapFilter)) continue;
+                    seances.Add(seance);
+                }
+            }
+            
+            var cinemaEvents = new List<CinemaEvent>();
+            for (var i = 0; i < random.Next(12, 30);)
+            {
+                var user = users[random.Next(users.Count)];
+                var seance = seances[random.Next(seances.Count)];
+                var cinemaEvent = CreateRandomCinemaEvent(
+                    user,
+                    seance.CinemaHall,
+                    seance
+                );
+                if (cinemaEvents.Where(e => e.Seance == cinemaEvent.Seance).Any(e => e.Seat == cinemaEvent.Seat))
+                    continue;
+                i++;
+                cinemaEvents.Add(cinemaEvent);
+            }
+
+            return new DataContext
+            {
+                Users = users,
+                Movies = movies,
+                Seances = seances,
+                CinemaHalls = cinemaHalls,
+                CinemaEvents = cinemaEvents
             };
         }
     }
