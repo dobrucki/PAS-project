@@ -1,7 +1,85 @@
-@model User
+@model UserDetailsViewModel
 
 @{
     ViewBag.Title = "User";
 }
 
-@Model.FirstName
+<div class="container-fluid pt-4 " >
+    <div class="d-flex justify-content-center">
+        <link rel="stylesheet" href="~/css/UserDetailsFontSize.css">
+        <table class="table-active  table-striped table-bordered UserDetailsFontSize">
+            <tbody>
+            <tr>
+                <td class="font-weight-bold">ID</td>
+                <td>@Model.User.Id</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">First name</td>
+                <td>@Model.User.FirstName</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Last name</td>
+                <td>@Model.User.LastName</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Email</td>
+                <td>@Model.User.Email</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">User type</td>
+                <td>@Model.User.UserType.ToString()</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">User acces level</td>
+                <td>@Model.User.AccessLevel</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Active</td>
+                <td>@Model.User.Active</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="pt-4 ">
+            
+            <button class="btn btn-lg btn-info mx-4">Edit</button>
+            <button class="btn btn-lg btn-danger mx-4">Delete</button>
+        </div>
+            </div>
+        
+    @if (Model.CinemaEvents.Count() != 0)
+    {
+        <div class="pt4 d-flex justify-content-center">
+            <table class="table-active table-striped table-bordered">
+
+                <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Seat column</th>
+                    <th>Seat row</th>
+                    <th>Movie</th>
+                    <th>Seance starting time</th>
+                    <th>Occurene time</th>
+                </tr>
+                </thead>
+                @foreach (var cinemaEvent in  Model.CinemaEvents)
+                {
+                    <tr>
+                        <td>@cinemaEvent.User.Id</td>
+                        <td>@cinemaEvent.Seat.Column</td>
+                        <td>@cinemaEvent.Seat.Row</td>
+                        <td>@cinemaEvent.Seance.Movie.Title</td>
+                        <td>@cinemaEvent.Seance.StartingTime</td>
+                        <td>@cinemaEvent.OccurenceTime</td>
+                    </tr>
+                }
+            </table>
+            
+        </div>
+    }
+    
+
+    
+</div>
+
+
