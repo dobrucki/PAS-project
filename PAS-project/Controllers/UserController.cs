@@ -1,4 +1,6 @@
 using System.Linq;
+using System.Net;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PAS_project.Models.Entities;
 using PAS_project.Models.Managers;
@@ -43,15 +45,16 @@ namespace PAS_project.Controllers
             return NotFound();
         }
         
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            var user = _userManager.GetUserById(id);
-            var userDetailsViewModel = new UserDetailsViewModel
-                {User = user, CinemaEvents = _cinemaEventManager.SearchByUser(user)};
-            if (user is null)
+            if (id is null) return NotFound();
+            var user = _userManager.GetUserById(id.Value);
+            if (user is null) return NotFound();
+                var userDetailsViewModel = new UserDetailsViewModel
             {
-                return NotFound();
-            }
+                User = user, 
+                CinemaEvents = _cinemaEventManager.SearchByUser(user)
+            };
             
             return View(userDetailsViewModel);
         }
