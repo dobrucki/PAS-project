@@ -3,7 +3,7 @@ using PAS_project.Models.Entities;
 
 namespace PAS_project.Models.Managers
 {
-    public class DataContext : IDataContext
+    internal class DataContext : IDataContext
     {
         public IEnumerable<User> Users { get; internal set; }
         public IEnumerable<Movie> Movies { get; internal set; }

@@ -27,7 +27,7 @@ namespace PAS_project.Models.Managers
             var random = new Random();
             var firstName = firstNames[random.Next(firstNames.Length)];
             var lastName = lastNames[random.Next(lastNames.Length)];
-            var email = $"{firstName}.{lastName}@example.com";
+            var email = $"{firstName.ToLower()}.{lastName.ToLower()}@example.com";
             return new User
             {
                 FirstName = firstName,
@@ -69,7 +69,7 @@ namespace PAS_project.Models.Managers
         {
             var random = new Random();
             var seats = new List<CinemaHall.Seat>();
-            for (var i = 0; i < random.Next(6, 12); i++)
+            for (var i = 'A'; i < 'A' + random.Next(7, 15); i++)
             {
                 for (var j = 0; j < random.Next(12, 28); j++)
                 {
@@ -97,7 +97,7 @@ namespace PAS_project.Models.Managers
             {
                 Movie = movie,
                 CinemaHall = cinemaHall,
-                StartingTime = time.AddMinutes(15 * random.Next(5, 23))
+                StartingTime = time.AddMinutes(15 * random.Next(5, 257))
             };
         }
 
@@ -117,9 +117,12 @@ namespace PAS_project.Models.Managers
             var random = new Random();
             
             var users = new List<User>();
-            for (var i = 0; i < random.Next(5, 15); i++)
+            for (var i = 0; i < random.Next(20, 32);)
             {
-                users.Add(CreateRandomUser());
+                var user = CreateRandomUser();
+                if (users.Any(u => u.Email == user.Email)) continue;
+                i++;
+                users.Add(user);
             }
 
             var movies = new List<Movie>();
@@ -137,7 +140,7 @@ namespace PAS_project.Models.Managers
             var seances = new List<Seance>();
             foreach (var movie in movies)
             {
-                for (var i = 0; i < random.Next(2, 5); i++)
+                for (var i = 0; i < random.Next(2, 5);)
                 {
                     var seance = CreateRandomSeance(movie, cinemaHalls[random.Next(cinemaHalls.Count)]);
                     bool TimeOverlapFilter(Seance s) =>
@@ -145,12 +148,13 @@ namespace PAS_project.Models.Managers
                         && s.StartingTime < seance.StartingTime.AddMinutes(movie.DurationTime)
                         && seance.StartingTime < s.StartingTime.AddMinutes(movie.DurationTime);
                     if (seances.Any(TimeOverlapFilter)) continue;
+                    i++;
                     seances.Add(seance);
                 }
             }
             
             var cinemaEvents = new List<CinemaEvent>();
-            for (var i = 0; i < random.Next(12, 30);)
+            for (var i = 0; i < random.Next(30, 70);)
             {
                 var user = users[random.Next(users.Count)];
                 var seance = seances[random.Next(seances.Count)];

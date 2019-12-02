@@ -6,7 +6,7 @@ namespace PAS_project.Models.Entities
     {
         public class Seat
         {
-            public int Row { get; set; }
+            public char Row { get; set; }
             public int Column { get; set; }
         }
         

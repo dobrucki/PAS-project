@@ -54,9 +54,8 @@
 
                 <thead>
                 <tr>
-                    <th>User ID</th>
-                    <th>Seat column</th>
-                    <th>Seat row</th>
+                    <th>Screening room</th>
+                    <th>Seat</th>
                     <th>Movie</th>
                     <th>Seance starting time</th>
                     <th>Occurene time</th>
@@ -65,9 +64,8 @@
                 @foreach (var cinemaEvent in  Model.CinemaEvents)
                 {
                     <tr>
-                        <td>@cinemaEvent.User.Id</td>
-                        <td>@cinemaEvent.Seat.Column</td>
-                        <td>@cinemaEvent.Seat.Row</td>
+                        <td>@cinemaEvent.Seance.CinemaHall.Name</td>
+                        <td>@cinemaEvent.Seat.Row@cinemaEvent.Seat.Column</td>
                         <td>@cinemaEvent.Seance.Movie.Title</td>
                         <td>@cinemaEvent.Seance.StartingTime</td>
                         <td>@cinemaEvent.OccurenceTime</td>
