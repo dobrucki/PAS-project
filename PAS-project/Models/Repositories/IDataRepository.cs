@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PAS_project.Models.Entities;
 
 namespace PAS_project.Models.Repositories
@@ -8,8 +9,8 @@ namespace PAS_project.Models.Repositories
     {
         void Add(T item);
         T GetById(int id);
-        IEnumerable<T> GetAll();
-        IEnumerable<T> GetAll(Func<T, bool> predicate);
+        IQueryable<T> GetAll();
+        IQueryable<T> GetAll(Func<T, bool> predicate);
         void Update(T item);
         void Delete(T item);
     }

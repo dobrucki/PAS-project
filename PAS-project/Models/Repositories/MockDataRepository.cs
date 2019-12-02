@@ -28,14 +28,14 @@ namespace PAS_project.Models.Repositories
             return _entities.FirstOrDefault(entity => entity.Key == id).Value;
         }
 
-        public IEnumerable<T> GetAll()
+        public IQueryable<T> GetAll()
         {
-            return _entities.Values.AsEnumerable();
+            return _entities.Values.AsQueryable();
         }
 
-        public IEnumerable<T> GetAll(Func<T, bool> predicate)
+        public IQueryable<T> GetAll(Func<T, bool> predicate)
         {
-            return _entities.Values.Where(predicate).AsEnumerable();
+            return _entities.Values.Where(predicate).AsQueryable();
         }
 
         public void Update(T entity)
