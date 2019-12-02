@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using PAS_project.Models.Entities;
 using PAS_project.Models.Entities.UserTypes;
@@ -41,6 +42,12 @@ namespace PAS_project.Models.Managers
         public IEnumerable<User> GetAllUsers()
         {
             return _userRepository.GetAll();
+        }
+
+        public IEnumerable<User> FilterUsersByEmail(string email)
+        {
+            bool Filter(User user) => user.Email.ToLower().Contains(email.ToLower());
+            return _userRepository.GetAll(Filter);
         }
         
         public void UpdateUser(User user)

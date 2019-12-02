@@ -32,25 +32,20 @@ namespace PAS_project.Controllers
             _userManager.AddUser(user);
             return RedirectToAction("Index", "Home");
         }
-        
-        public ActionResult All(string email=null)
+
+        public ActionResult All([FromQuery]string email)
         {
-            var users = _userManager.GetAllUsers().ToList();
-            if (!string.IsNullOrEmpty(email)) users = users
-                .Where(u => u.Email.ToLower().Contains(email.ToLower())).ToList();            
-            if (users.Any())
-            {
-                return View(users.OrderBy(x => x.Id));
-            }
-            return NotFound();
+            if (email == null) return View(_userManager.GetAllUsers().ToList());
+            var users = _userManager.FilterUsersByEmail(email).ToList();
+            return View(users.OrderBy(x => x.Id));
         }
         
-        public ActionResult Details(int? id)
+        public ActionResult Details([FromRoute]int? id)
         {
             if (id is null) return NotFound();
             var user = _userManager.GetUserById(id.Value);
             if (user is null) return NotFound();
-                var userDetailsViewModel = new UserDetailsViewModel
+            var userDetailsViewModel = new UserDetailsViewModel
             {
                 User = user, 
                 CinemaEvents = _cinemaEventManager.SearchByUser(user)
