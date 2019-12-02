@@ -6,12 +6,12 @@ using PAS_project.ViewModels;
 
 namespace PAS_project.Controllers
 {
-    public class UsersController: Controller
+    public class UserController: Controller
     {
         private readonly UserManager _userManager;
         private readonly CinemaEventManager _cinemaEventManager;
 
-        public UsersController(UserManager userManager, CinemaEventManager cinemaEventManager)
+        public UserController(UserManager userManager, CinemaEventManager cinemaEventManager)
         {
             _userManager = userManager;
             _cinemaEventManager = cinemaEventManager;
@@ -43,7 +43,7 @@ namespace PAS_project.Controllers
             return NotFound();
         }
         
-        public ActionResult User(int id)
+        public ActionResult Details(int id)
         {
             var user = _userManager.GetUserById(id);
             var userDetailsViewModel = new UserDetailsViewModel

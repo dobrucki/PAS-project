@@ -7,12 +7,12 @@
 <div class="container align-items-center pt-4">
     <div class="row">
         <div class="col-sm-9">
-                    <a asp-controller="Users" asp-action="Create" class="nav-link">
+                    <a asp-controller="User" asp-action="Create" class="nav-link">
                         <button type="submit" class="btn btn-primary">Add User</button>
                     </a>
         </div>
         <div class="col-sm-3">
-            <form class="input-group" asp-controller="Users" asp-action="All" method="get">
+            <form class="input-group" asp-controller="User" asp-action="All" method="get">
                         <input type="text" name="email" class="form-control" placeholder="Search by email">
                         <div class="input-group-append">
                             <button class="btn btn-secondary" type="submit">
@@ -41,7 +41,7 @@
 
         @foreach (var user in Model)
         {
-            <tr onclick="location.href = '@(Url.Action("User", "Users", new {user.Id}))'">
+            <tr onclick="location.href = '@(Url.Action("Details", "User", new {user.Id}))'">
                 <td>@user.Id</td>
                 <td>@user.FirstName</td>
                 <td>@user.LastName</td>
