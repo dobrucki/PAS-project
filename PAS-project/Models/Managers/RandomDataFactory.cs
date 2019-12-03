@@ -71,7 +71,7 @@ namespace PAS_project.Models.Managers
             var seats = new List<CinemaHall.Seat>();
             for (var i = 'A'; i < 'A' + random.Next(7, 15); i++)
             {
-                for (var j = 0; j < random.Next(12, 28); j++)
+                for (var j = 1; j < 9; j++)
                 {
                     seats.Add(new CinemaHall.Seat
                     {

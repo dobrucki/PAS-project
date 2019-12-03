@@ -45,6 +45,12 @@ namespace PAS_project.Models.Managers
         {
             return _seanceRepository.GetAll();
         }
+
+        public IEnumerable<Seance> FilterSeancesByTitle(string title)
+        {
+            bool Filter(Seance seance) => seance.Movie.Title.ToLower().Contains(title.ToLower());
+            return _seanceRepository.GetAll(Filter);
+        }
         
         public void UpdateSeance(Seance seance)
         {

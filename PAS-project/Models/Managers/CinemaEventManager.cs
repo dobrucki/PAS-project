@@ -76,8 +76,25 @@ namespace PAS_project.Models.Managers
             bool Filter(CinemaEvent e) => e.Seance == seance;
             return _cinemaEventRepository.GetAll(Filter);
         }
-        
-        
-        
+
+        public IDictionary<CinemaHall.Seat, bool> GetSeatsWithTags(Seance seance)
+        {
+            var seats = new Dictionary<CinemaHall.Seat, bool>();
+            var allEvents = SearchBySeance(seance).ToList();
+            foreach (var seat in seance.CinemaHall.Seats.ToList())
+            {
+                if (allEvents.Any(e => e.Seat == seat))
+                {
+                    seats.Add(seat, true);
+                }
+                else
+                {
+                    seats.Add(seat, false);
+                }
+            }
+            return seats;
+        }
+
+
     }
 }
