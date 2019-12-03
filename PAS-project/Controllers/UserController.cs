@@ -53,6 +53,34 @@ namespace PAS_project.Controllers
             
             return View(userDetailsViewModel);
         }
+
+        public ActionResult Activate([FromRoute]int? id)
+        {
+            if (id is null) return NotFound();
+            var user = _userManager.GetUserById(id.Value);
+            if (user is null) return NotFound();
+            _userManager.ActivateUser(user);
+            var userDetailsViewModel = new UserDetailsViewModel
+            {
+                User = user, 
+                CinemaEvents = _cinemaEventManager.SearchByUser(user)
+            };
+            return RedirectToAction("Details", new {id});
+        }
+        
+        public ActionResult Deactivate([FromRoute]int? id)
+        {
+            if (id is null) return NotFound();
+            var user = _userManager.GetUserById(id.Value);
+            if (user is null) return NotFound();
+            _userManager.DeActivateUser(user);
+            var userDetailsViewModel = new UserDetailsViewModel
+            {
+                User = user, 
+                CinemaEvents = _cinemaEventManager.SearchByUser(user)
+            };
+            return RedirectToAction("Details", new {id});
+        }
         
 
     }
