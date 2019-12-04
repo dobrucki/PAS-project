@@ -9,38 +9,43 @@
     <link rel="stylesheet" href="~/lib/fontawesome/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-      <!-- Brand -->
-      <a asp-action="Index" asp-controller="Home" class="navbar-brand">PAS_Cinema</a>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <!-- Brand -->
+  <a asp-action="Index" asp-controller="Home" class="navbar-brand">PAS_Cinema</a>
     
-      <!-- Toggle button -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  <!-- Toggle button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
     
-      <!-- Navbar links -->
-      <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a asp-controller="Seance" asp-action="All" class="nav-link">Seances</a>
-          </li>
-          <li class="nav-item">
-            <a asp-controller="User" asp-action="All" class="nav-link">Users</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link">Sign in</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link">Sign Up</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <main role="main" class="pb-3">
-            @RenderBody()
-    </main>
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a asp-controller="Seance" asp-action="All" class="nav-link">Seances</a>
+      </li>
+      <li class="nav-item">
+        <a asp-controller="User" asp-action="All" class="nav-link">Users</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link">Sign in</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link">Sign Up</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<main role="main" class="pb-3">
+  @if (TempData["comment"] != null)
+  {
+    <h6 class="text-center text-info mt-3">@TempData["comment"]</h6>
+  }
+  @RenderBody()
+</main>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
