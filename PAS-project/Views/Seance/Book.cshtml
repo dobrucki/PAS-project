@@ -3,18 +3,18 @@
 
 <div class="container align-items-center">
     
-    <input type="text" class="form-control my-3 w-25" placeholder="User ID">
+    <input type="text" class="form-control my-3 w-q25" placeholder="User ID">
     <div class="row mt-4">
-        @foreach (var seat in Model)
+        @foreach (var (key, value) in Model)
         {
             <div class="col-1">
                 @{ var myClass = "btn-success";}
-                @if (seat.Value)
+                @if (value)
                 {
                     myClass = "btn-danger";
                 }
                 <button class="btn @myClass m-2">
-                    @seat.Key.Row@seat.Key.Column
+                    @key.Row@(key.Column)
                 </button>
             </div>
         }

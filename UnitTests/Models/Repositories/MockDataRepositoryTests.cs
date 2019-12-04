@@ -14,8 +14,8 @@ namespace UnitTests.Models.Repositories
         {
             // Arrange
             var repository = new MockDataRepository<User>();
-            const int id = 100;
-            var entity = new User {Id = id};
+            const int id = 1;
+            var entity = new User {};
 
             // Act
             repository.Add(entity);
@@ -38,7 +38,7 @@ namespace UnitTests.Models.Repositories
         }
 
         [Test]
-        public void Add_SameId_ExceptionThrown()
+        public void Add_SameId_ExceptionNotThrown()
         {
             // Arrange
             var repository = new MockDataRepository<User>();
@@ -50,7 +50,7 @@ namespace UnitTests.Models.Repositories
             void Action() => repository.Add(user2);
 
             // Assert
-            Assert.Throws<ArgumentException>(Action);
+            Assert.DoesNotThrow(Action);
         }
 
         [Test]
@@ -73,16 +73,16 @@ namespace UnitTests.Models.Repositories
         {
             // Arrange
             var repository = new MockDataRepository<User>();
-            var user = new User {Id = 100, Email = "john@example.com"};
+            var user = new User {Email = "john@example.com"};
             const string updatedEmail = "jedrzej@example.com";
-            var updatedUser = new User {Id = 100, Email = updatedEmail};
+            var updatedUser = new User {Id = 1, Email = updatedEmail};
             repository.Add(user);
             
             // Act
             repository.Update(updatedUser);
             
             // Assert
-            Assert.AreEqual(updatedEmail, repository.GetById(100).Email);
+            Assert.AreEqual(updatedEmail, repository.GetById(1).Email);
         }
     }
 }

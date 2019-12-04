@@ -41,7 +41,9 @@ namespace PAS_project.Models.Repositories
         public void Update(T entity)
         {
             var actualEntity = GetById(entity.Id);
-            if (actualEntity is null || actualEntity.GetType() != entity.GetType())
+            if (actualEntity is null 
+                || actualEntity.GetType() != entity.GetType() 
+                && entity.GetType().IsSubclassOf(typeof(T)))
             {
                 throw new ArgumentException("Invalid argument");
             }
