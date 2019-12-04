@@ -65,7 +65,7 @@ namespace PAS_project.Controllers
                 User = user, 
                 CinemaEvents = _cinemaEventManager.SearchByUser(user)
             };
-            return RedirectToAction("Details", new {id});
+            return RedirectToAction("All");
         }
         
         public ActionResult Deactivate([FromRoute]int? id)
@@ -79,7 +79,8 @@ namespace PAS_project.Controllers
                 User = user, 
                 CinemaEvents = _cinemaEventManager.SearchByUser(user)
             };
-            return RedirectToAction("Details", new {id});
+            return RedirectToAction("All");
+
         }
         
 
