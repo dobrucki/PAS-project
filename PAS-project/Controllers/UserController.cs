@@ -30,7 +30,8 @@ namespace PAS_project.Controllers
         {
             if (!ModelState.IsValid) return View();
             _userManager.AddUser(user);
-            return RedirectToAction("Index", "Home");
+            TempData["comment"] = $"Successfully added new user ID: {user.Id}";
+            return RedirectToAction("All");
         }
 
         public ActionResult All([FromQuery]string email)
@@ -60,11 +61,7 @@ namespace PAS_project.Controllers
             var user = _userManager.GetUserById(id.Value);
             if (user is null) return NotFound();
             _userManager.ActivateUser(user);
-            var userDetailsViewModel = new UserDetailsViewModel
-            {
-                User = user, 
-                CinemaEvents = _cinemaEventManager.SearchByUser(user)
-            };
+            TempData["comment"] = $"Successfully activated user with ID: {user.Id}.";
             return RedirectToAction("All");
         }
         
@@ -74,11 +71,7 @@ namespace PAS_project.Controllers
             var user = _userManager.GetUserById(id.Value);
             if (user is null) return NotFound();
             _userManager.DeActivateUser(user);
-            var userDetailsViewModel = new UserDetailsViewModel
-            {
-                User = user, 
-                CinemaEvents = _cinemaEventManager.SearchByUser(user)
-            };
+            TempData["comment"] = $"Successfully deactivated user with ID: {user.Id}.";
             return RedirectToAction("All");
 
         }
