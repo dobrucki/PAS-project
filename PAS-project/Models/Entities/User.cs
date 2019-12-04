@@ -27,7 +27,7 @@ namespace PAS_project.Models.Entities
         {
             UserType = StandardUserType;
         }
-        
+
     }
 
     namespace UserTypes

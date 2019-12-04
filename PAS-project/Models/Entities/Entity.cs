@@ -5,6 +5,6 @@ namespace PAS_project.Models.Entities
 {
     public abstract class Entity
     {
-        public int Id { get; protected internal set; }
+        public virtual int Id { get; protected internal set; }
     }
 }

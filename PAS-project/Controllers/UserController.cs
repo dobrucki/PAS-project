@@ -82,29 +82,31 @@ namespace PAS_project.Controllers
             if (id is null) return NotFound();
             var user = _userManager.GetUserById(id.Value);
             if (user is null) return NotFound();
-
             var editUser = new EditUserViewModel
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Active = user.Active,
-                AccessLevel = user.AccessLevel,
-                UserType = user.UserType
-
+                Id = id.Value,
+                User = user
             };
-            
-            editUser.SetId(id.Value);
-            
+
             return View(editUser);
         }
         
         [HttpPost]
         public ActionResult Edit(EditUserViewModel editUser)
         {
-            var u = editUser;
-            _userManager.UpdateUser(u);
-            return RedirectToAction("Details", new {u.Id});
+            /*var u = new User
+            {
+                FirstName = editUser.FirstName,
+                LastName = editUser.LastName,
+                Email = editUser.Email,
+                UserType = editUser.UserType,
+                AccessLevel = editUser.AccessLevel,
+                Active = editUser.Active
+            };
+            var user = new User(editUser.Id, u);*/
+            editUser.User.Id = editUser.Id;
+            _userManager.UpdateUser(editUser.User);
+            return RedirectToAction("Details", new { editUser.Id });
         }
         
 

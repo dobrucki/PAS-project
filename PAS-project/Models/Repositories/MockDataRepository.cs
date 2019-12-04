@@ -40,8 +40,8 @@ namespace PAS_project.Models.Repositories
 
         public void Update(T entity)
         {
-            var actualEntity = GetById(30001);
-            if (false)
+            var actualEntity = GetById(entity.Id);
+            if (actualEntity.GetType() != entity.GetType())
             {
                 throw new ArgumentException("Invalid argument");
             }
