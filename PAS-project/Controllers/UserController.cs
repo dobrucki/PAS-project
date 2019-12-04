@@ -85,7 +85,6 @@ namespace PAS_project.Controllers
 
             var editUser = new EditUserViewModel
             {
-                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
@@ -95,13 +94,15 @@ namespace PAS_project.Controllers
 
             };
             
+            editUser.SetId(id.Value);
+            
             return View(editUser);
         }
         
         [HttpPost]
         public ActionResult Edit(EditUserViewModel editUser)
         {
-            var u = (User) editUser;
+            var u = editUser;
             _userManager.UpdateUser(u);
             return RedirectToAction("Details", new {u.Id});
         }

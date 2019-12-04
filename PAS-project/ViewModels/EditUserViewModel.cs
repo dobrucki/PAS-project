@@ -4,7 +4,10 @@ namespace PAS_project.ViewModels
 {
     public class EditUserViewModel : User
     {
-        public new int Id { get; internal set; }
+        public void SetId(int id)
+        {
+            Id = id;
+        }
         
     }
 }
