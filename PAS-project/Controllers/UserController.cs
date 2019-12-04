@@ -82,6 +82,36 @@ namespace PAS_project.Controllers
             return RedirectToAction("All");
 
         }
+  
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            if (id is null) return NotFound();
+            var user = _userManager.GetUserById(id.Value);
+            if (user is null) return NotFound();
+
+            var editUser = new EditUserViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Active = user.Active,
+                AccessLevel = user.AccessLevel,
+                UserType = user.UserType
+
+            };
+            
+            return View(editUser);
+        }
+        
+        [HttpPost]
+        public ActionResult Edit(EditUserViewModel editUser)
+        {
+            var u = (User) editUser;
+            _userManager.UpdateUser(u);
+            return RedirectToAction("Details", new {u.Id});
+        }
         
 
     }

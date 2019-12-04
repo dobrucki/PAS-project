@@ -40,19 +40,20 @@
             </tbody>
         </table>
         </div>
-        <div class="pt-4 ">
-            <button class="btn btn-lg btn-info mx-4">Edit</button>
-            @if (!Model.User.Active)
-            {
-                <button onclick="location.href = '@(Url.Action("Activate", "User", new {Model.User.Id}))'"
-                        class="btn btn-lg btn-success mx-4">Activate</button>
-            }
-            @if (Model.User.Active)
-            {
-                <button onclick="location.href = '@(Url.Action("Deactivate", "User", new {Model.User.Id}))';"
-                        class="btn btn-lg btn-danger mx-4">Deactivate</button>
-            }
-        </div>
+    <div class="pt-4 ">
+        <button onclick="location.href = '@(Url.Action("Edit", "User", new {Model.User.Id}))'"
+            class="btn btn-lg btn-info mx-4">Edit</button>
+        @if (!Model.User.Active)
+        {
+            <button onclick="location.href = '@(Url.Action("Activate", "User", new {Model.User.Id}))'"
+                    class="btn btn-lg btn-success mx-4">Activate</button>
+        }
+        @if (Model.User.Active)
+        {
+            <button onclick="location.href = '@(Url.Action("Deactivate", "User", new {Model.User.Id}))';"
+                    class="btn btn-lg btn-danger mx-4">Deactivate</button>
+        }
+    </div>
             
         
     @if (Model.CinemaEvents.Count() != 0)
