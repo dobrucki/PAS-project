@@ -1,8 +1,10 @@
+using System;
 using System.Linq;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PAS_project.Models.Entities;
+using PAS_project.Models.Entities.UserTypes;
 using PAS_project.Models.Managers;
 using PAS_project.ViewModels;
 
@@ -79,6 +81,7 @@ namespace PAS_project.Controllers
         [HttpGet]
         public ActionResult Edit(int? id)
         {
+            
             if (id is null) return NotFound();
             var user = _userManager.GetUserById(id.Value);
             if (user is null) return NotFound();
@@ -92,7 +95,7 @@ namespace PAS_project.Controllers
         }
         
         [HttpPost]
-        public ActionResult Edit(EditUserViewModel editUser)
+        public ActionResult Edit(EditUserViewModel editUser, string type)
         {
             /*var u = new User
             {
@@ -104,7 +107,22 @@ namespace PAS_project.Controllers
                 Active = editUser.Active
             };
             var user = new User(editUser.Id, u);*/
+            if (!ModelState.IsValid) return View();
+            
+            
             editUser.User.Id = editUser.Id;
+            if (type.Equals("Standard"))
+            {
+                editUser.User.UserType = new StandardUserType();
+                editUser.User.PhoneNumber = null;
+            }
+            else
+            {
+                editUser.User.UserType = new VipUserType();
+                
+
+            }
+            
             _userManager.UpdateUser(editUser.User);
             return RedirectToAction("Details", new { editUser.Id });
         }

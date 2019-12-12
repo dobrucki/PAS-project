@@ -19,6 +19,11 @@ namespace PAS_project.Models.Entities
         [Required]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail is not valid.")]
         public string Email { get; set; }
+        [Required(ErrorMessage = "You must provide a phone number")]
+        [Display(Name = "Home Phone")]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\(?([1-9][0-9]{8})$", ErrorMessage = "Not a valid phone number")]
+        public string PhoneNumber { get; set; }
         public IUserType UserType { get; set; }
         public UserAccessLevel AccessLevel { get; set; }
         public bool Active { get; set; }
@@ -26,6 +31,8 @@ namespace PAS_project.Models.Entities
         public User()
         {
             UserType = StandardUserType;
+            PhoneNumber = null;
+
         }
 
     }
@@ -42,13 +49,13 @@ namespace PAS_project.Models.Entities
         public interface IUserType
         {
             int MinutesForBooking { get; }
-            int MinutesForCancelling { get; }
+            int MinutesForCancelling { get; set; }
         }
 
         internal class StandardUserType : IUserType
         {
             public int MinutesForBooking { get; } 
-            public int MinutesForCancelling { get; }
+            public int MinutesForCancelling { get; set; }
 
             public StandardUserType()
             {
@@ -65,7 +72,8 @@ namespace PAS_project.Models.Entities
         internal class VipUserType : IUserType
         {
             public int MinutesForBooking { get; }
-            public int MinutesForCancelling { get; }
+            public int MinutesForCancelling { get; set; }
+            
 
             public VipUserType()
             {

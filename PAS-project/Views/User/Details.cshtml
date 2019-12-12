@@ -4,7 +4,7 @@
     ViewBag.Title = "User";
 }
 
-<div class="container-fluid pt-4 " >
+<div class="container-fluid pt-4 ">
     <div class=" justify-content-center">
         <link rel="stylesheet" href="~/css/UserDetailsFontSize.css">
         <table class="table-active  table-striped table-bordered UserDetailsFontSize">
@@ -37,25 +37,39 @@
                 <td class="font-weight-bold">Active</td>
                 <td>@Model.User.Active</td>
             </tr>
-            </tbody>
+            @if (! string.IsNullOrEmpty(Model.User.PhoneNumber))
+            {
+                <tr>
+                    <td class="font-weight-bold">Phone number</td>
+                    <td>@Model.User.PhoneNumber</td>
+                </tr>
+                
+            }
+                </tbody>
         </table>
-        </div>
+    </div>
     <div class="pt-4 ">
         <button onclick="location.href = '@(Url.Action("Edit", "User", new {Model.User.Id}))'"
-            class="btn btn-lg btn-info mx-4">Edit</button>
+                class="btn btn-lg btn-info mx-4">
+            Edit
+        </button>
         @if (!Model.User.Active)
         {
             <button onclick="location.href = '@(Url.Action("Activate", "User", new {Model.User.Id}))'"
-                    class="btn btn-lg btn-success mx-4">Activate</button>
+                    class="btn btn-lg btn-success mx-4">
+                Activate
+            </button>
         }
         @if (Model.User.Active)
         {
             <button onclick="location.href = '@(Url.Action("Deactivate", "User", new {Model.User.Id}))';"
-                    class="btn btn-lg btn-danger mx-4">Deactivate</button>
+                    class="btn btn-lg btn-danger mx-4">
+                Deactivate
+            </button>
         }
     </div>
-            
-        
+
+
     @if (Model.CinemaEvents.Count() != 0)
     {
         <div class="align-items-center pt-4">
@@ -93,5 +107,3 @@ function activate() {
     
 }
 </script>
-
-
