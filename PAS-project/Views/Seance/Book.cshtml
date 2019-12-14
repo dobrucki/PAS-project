@@ -1,11 +1,11 @@
-@model IDictionary<CinemaHall.Seat, bool>
+@model BookSeatViewModel
 
 
 <div class="container align-items-center">
     
-    <input type="text" class="form-control my-3 w-q25" placeholder="User ID">
+    
     <div class="row mt-4">
-        @foreach (var (key, value) in Model)
+        @foreach (var (key, value) in Model.Seats)
         {
             <div class="col-1">
                 @{ var myClass = "btn-success";}
@@ -19,4 +19,10 @@
             </div>
         }
     </div>
+    <form asp-controller="Booking" asp-action="Create" method="post">
+        <input asp-for="SeanceId" type="hidden" value="@Model.Seance.Id">
+        <input asp-for="UserId" type="text" class="form-control my-3 w-25" placeholder="User ID">
+        <input asp-for="SeatId" type="text" class="form control my-3 w-25" placeholder="Seat ID">
+        <button type="submit" class="btn btn-primary">Book</button>
+    </form>
 </div>

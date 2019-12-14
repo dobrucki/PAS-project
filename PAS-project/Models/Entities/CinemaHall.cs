@@ -14,5 +14,13 @@ namespace PAS_project.Models.Entities
         public string Name { get; set; }
         public IEnumerable<Seat> Seats { get; set; }
 
+        public Seat GetSeatByString(string rowColumn)
+        {
+            var col = rowColumn.Substring(1);
+            return Seats
+                .Where(s => s.Row.Equals(rowColumn[0]))
+                .FirstOrDefault(s => s.Column == int.Parse(col));
+        }
+
     }
 }

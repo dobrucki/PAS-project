@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using PAS_project.Models.Managers;
@@ -38,7 +39,12 @@ namespace PAS_project.Controllers
             if (id == null) return NotFound();
             var seance = _seanceManager.GetSeanceById(id.Value);
             if (seance == null) return NotFound();
-            return View(_cinemaEventManager.GetSeatsWithTags(seance));
+            var vm = new BookSeatViewModel
+            {
+                Seats = _cinemaEventManager.GetSeatsWithTags(seance),
+                Seance = seance
+            };
+            return View(vm);
         }
         
 
