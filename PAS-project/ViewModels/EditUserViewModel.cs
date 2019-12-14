@@ -6,6 +6,6 @@ namespace PAS_project.ViewModels
     {
         public int Id { get; set; }
         public User User { get; set; }
-
+        
     }
 }

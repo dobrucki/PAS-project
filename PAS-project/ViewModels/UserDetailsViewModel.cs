@@ -8,6 +8,7 @@ namespace PAS_project.ViewModels
         public User User { get; set; }
 
         public IEnumerable<CinemaEvent> CinemaEvents { get; set; }
+        
     }
 
     
