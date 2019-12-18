@@ -4,8 +4,10 @@
     ViewBag.Title = "Edit Standard User";
 }
 
-<form asp-controller="User" asp-action="EditStandard" method="post" class="container-fluid mt-3 p-1" style="width: 50%">
+<form asp-controller="User" asp-action="Edit" method="post" class="container-fluid mt-3 p-1" style="width: 50%">
     <input hidden asp-for="Id"/>
+    <input hidden asp-for="Activity"/>
+    <input hidden asp-for="Type"/>
     <div class="form-group row">
         <label asp-for="User.Email" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">

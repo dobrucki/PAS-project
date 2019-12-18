@@ -61,7 +61,7 @@
     <div class="pt-4 ">
         @if (Model.User.UserType.ToString().Equals("Standard"))
                     {
-                        <button onclick="location.href = '@(Url.Action("EditStandard", "User", new {Model.User.Id}))'"
+                        <button onclick="location.href = '@(Url.Action("Edit", "User", new {Model.User.Id}))'"
                                 class="btn btn-lg btn-info mx-4">
                             Edit
                         </button>
@@ -72,7 +72,7 @@
                     }
                     @if (Model.User.UserType.ToString().Equals("Vip"))
                     {
-                        <button onclick="location.href = '@(Url.Action("EditVip", "User", new {Model.User.Id}))'"
+                        <button onclick="location.href = '@(Url.Action("Edit", "User", new {Model.User.Id}))'"
                                 class="btn btn-lg btn-info mx-4">
                             Edit
                         </button>

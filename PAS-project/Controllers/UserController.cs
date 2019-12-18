@@ -33,6 +33,7 @@ namespace PAS_project.Controllers
             TempData["comment"] = $"Successfully added new user ID: {user.Id}";
             return RedirectToAction("All");
         }
+        [HttpGet]
         public ViewResult CreateVip()
         {
             return View();
@@ -110,71 +111,68 @@ namespace PAS_project.Controllers
             TempData["comment"] = $"Successfully changed type of user with ID: {user.Id}.";
             return RedirectToAction("All");
         }
-  
         [HttpGet]
-        public ActionResult EditStandard(int? id)
-        {
+  public ActionResult Edit(int? id)
+  {
             
-            if (id is null) return NotFound();
-            var user = _userManager.GetUserById(id.Value);
-            if (user is null) return NotFound();
-            var editUser = new EditUserViewModel
-            {
-                Id = id.Value,
-                User = user
-            };
+      if (id is null) return NotFound();
+      var user = _userManager.GetUserById(id.Value);
+      if (user is null) return NotFound();
+      var editUser = new EditUserViewModel
+      {
+          Id = id.Value,
+          User = user,
+          Type = user.UserType.ToString(),
+          Activity = user.Active
+      };
 
-            return View(editUser);
-        }
+      return View(user.UserType.ToString().Equals("Vip") ? "~/Views/User/EditVip.cshtml" : "~/Views/User/EditStandard.cshtml", editUser);
+  }
         
-        [HttpPost]
-        public ActionResult EditStandard(EditUserViewModel eUser)
-        {
-            var ms = ModelState;
-                ms.Remove("User.PhoneNumber");
-                if (!ms.IsValid)
-                {
+  [HttpPost]
+  public ActionResult Edit(EditUserViewModel eUser)
+  {
 
-                    return View();
-                }
+      if (eUser.Type.Equals("Standard"))
+      {
+          var ms = ModelState;
+          ms.Remove("User.PhoneNumber");
+          if (ms.IsValid)
+          {
 
-            eUser.User.Id = eUser.Id;
-            _userManager.UpdateUser(eUser.User);
-            return RedirectToAction("Details", new { eUser.Id });
-        }
-        
-          
-        [HttpGet]
-        public ActionResult EditVip(int? id)
-        {
-            
-            if (id is null) return NotFound();
-            var user = _userManager.GetUserById(id.Value);
-            if (user is null) return NotFound();
-            var editUser = new EditUserViewModel
-            {
-                Id = id.Value,
-                User = user,
-            };
-            return View(editUser);
+              eUser.User.Id = eUser.Id;
+              eUser.User.UserType = Models.Entities.User.StandardUserType;
+              eUser.User.Active = eUser.Activity;
+              _userManager.UpdateUser(eUser.User);
+              
+          }
+          else
+          {
+              return View("~/Views/User/EditStandard.cshtml");
+          }
+      }
+      
+      else
+      {
+          if (ModelState.IsValid)
+          {
 
-        }
-        
-        [HttpPost]
-        public ActionResult EditVip(EditUserViewModel editUser)
-        {
+              
+              eUser.User.Id = eUser.Id;
+              eUser.User.UserType = Models.Entities.User.VipUserType;
+              eUser.User.Active = eUser.Activity;
+              _userManager.UpdateUser(eUser.User);
+              
+          }
+          else
+          {
+              return View("~/Views/User/EditVip.cshtml");
+          }
+      }
 
-            if (!ModelState.IsValid)
-            {
-
-                return View();
-            }
-            editUser.User.Id = editUser.Id;
-            editUser.User.UserType = Models.Entities.User.VipUserType;
-            _userManager.UpdateUser(editUser.User);
-            return RedirectToAction("Details", new { editUser.Id });
-        }
-        
+      
+      return RedirectToAction("Details", new { eUser.Id });
+  }
 }
 
 }

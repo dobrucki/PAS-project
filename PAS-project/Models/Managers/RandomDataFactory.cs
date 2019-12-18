@@ -21,7 +21,7 @@ namespace PAS_project.Models.Managers
         
         private static User CreateRandomUser()
         {
-            string[] firstNames = {"Michał", "Mateusz", "Kamil", "Alojzy", "Sebastian", "Krystian", "Szymon"};
+            string[] firstNames = {"Michal", "Mateusz", "Kamil", "Alojzy", "Sebastian", "Krystian", "Szymon"};
             string[] lastNames = {"Kowalski", "Wasilewski", "Dobrucki", "Celejewski", "Nowak", "Trzmiel"};
             
             var random = new Random();

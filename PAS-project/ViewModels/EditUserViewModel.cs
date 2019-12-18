@@ -7,7 +7,8 @@ namespace PAS_project.ViewModels
     {
         public int Id { get; set; }
         public User User { get; set; }
-        public IUserType UserType { get; set; }
+        public string Type { get; set; }
+        public bool Activity { get; set; }
 
     }
 }
