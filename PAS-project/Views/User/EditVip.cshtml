@@ -1,11 +1,9 @@
 @model EditUserViewModel
 
 @{
-    ViewBag.Title = "Edit User";
+    ViewBag.Title = "Edit Vip User";
 }
-
-<form asp-controller="User" asp-action="Edit" method="post" class="container-fluid mt-3 p-1" style="width: 50%">
-    <input hidden asp-for="Id"/>
+<form asp-controller="User" asp-action="EditVip" method="post" class="container-fluid mt-3 p-1" style="width: 50%">
     <div class="form-group row">
         <label asp-for="User.Email" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
@@ -28,21 +26,16 @@
         </div>
     </div>
 
-    
-    <div class="form-group row">
+    <div id="dvString"
+         class="form-group row">
+        <label asp-for="User.PhoneNumber" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            <input type="radio" id="chkNo" value="Standard" name="type" onclick="ShowHideDiv()" checked="checked"/>Standard
-            <input type="radio" id="chkYes" value="Vip" name="type" onclick="ShowHideDiv()"/>Vip
+           
+            <input asp-for="User.PhoneNumber" value="" class="form-control" placeholder="Phone number"/>
+            <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
+
         </div>
     </div>
-    
-    <div id="dvString" style="display: none" class="form-group row">
-            <label asp-for="User.PhoneNumber" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <input asp-for="User.PhoneNumber" class="form-control" placeholder="Phone number"/>
-                
-            </div>
-        </div>
 
     <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -50,12 +43,11 @@
         
         <div class="col-sm-10">
             <button type="submit" class="btn btn-primary">Update</button>
-
-            <button type="submit" class="btn btn-primary">Cancel</button>
+            
+            <a asp-controller="User" asp-action="All" class="btn btn-primary">Cancel</a>
 
         </div>
     </div>
 </form>
 
-<script src="~/js/VipUserScript.js"></script>
 

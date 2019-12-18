@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using PAS_project.Models.Entities.UserTypes;
 
@@ -6,8 +7,8 @@ namespace PAS_project.Models.Entities
     public class User : Entity
     {
 
-        internal static readonly IUserType StandardUserType = new StandardUserType();
-        internal static readonly IUserType VipUserType = new VipUserType();
+        public static readonly IUserType StandardUserType = new StandardUserType();
+        public static readonly IUserType VipUserType = new VipUserType();
         [Required]
         [StringLength(50, ErrorMessage = "First name length can't be more than 50.")]
         [Display(Name = "First Name")]
@@ -20,7 +21,7 @@ namespace PAS_project.Models.Entities
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail is not valid.")]
         public string Email { get; set; }
         [Required(ErrorMessage = "You must provide a phone number")]
-        [Display(Name = "Home Phone")]
+        [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber)]
         [RegularExpression(@"^\(?([1-9][0-9]{8})$", ErrorMessage = "Not a valid phone number")]
         public string PhoneNumber { get; set; }
@@ -31,7 +32,7 @@ namespace PAS_project.Models.Entities
         public User()
         {
             UserType = StandardUserType;
-            PhoneNumber = null;
+            PhoneNumber = string.Empty;
 
         }
 
@@ -49,13 +50,13 @@ namespace PAS_project.Models.Entities
         public interface IUserType
         {
             int MinutesForBooking { get; }
-            int MinutesForCancelling { get; set; }
+            int MinutesForCancelling { get; }
         }
 
         internal class StandardUserType : IUserType
         {
             public int MinutesForBooking { get; } 
-            public int MinutesForCancelling { get; set; }
+            public int MinutesForCancelling { get; }
 
             public StandardUserType()
             {

@@ -1,5 +1,6 @@
 function ShowHideDiv() {
-    var chkYes = document.getElementById("chkYes");
+    var standardRadio = document.getElementById("chkYes");
+    var vipRadio = document.getElementById("chkNo");
     var dvString = document.getElementById("dvString");
-    dvString.style.display = chkYes.checked ? "block" : "none";
+    dvString.style.display = standardRadio.checked ? "block" : "none";
 }
