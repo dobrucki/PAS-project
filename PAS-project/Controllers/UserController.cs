@@ -1,11 +1,6 @@
-using System;
 using System.Linq;
-using System.Net;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using PAS_project.Models.Entities;
-using PAS_project.Models.Entities.UserTypes;
 using PAS_project.Models.Managers;
 using PAS_project.ViewModels;
 
@@ -23,15 +18,31 @@ namespace PAS_project.Controllers
         }
         
         [HttpGet]
-        public ViewResult Create()
+        public ViewResult CreateStandard()
         {
             return View();
         }
         
         [HttpPost] 
-        public IActionResult Create(User user)
+        public IActionResult CreateStandard(User user)
+        {
+            var ms = ModelState;
+            ms.Remove("PhoneNumber");
+            if (!ms.IsValid) return View();
+            _userManager.AddUser(user);
+            TempData["comment"] = $"Successfully added new user ID: {user.Id}";
+            return RedirectToAction("All");
+        }
+        public ViewResult CreateVip()
+        {
+            return View();
+        }
+        
+        [HttpPost] 
+        public IActionResult CreateVip(User user)
         {
             if (!ModelState.IsValid) return View();
+            user.UserType = Models.Entities.User.VipUserType;
             _userManager.AddUser(user);
             TempData["comment"] = $"Successfully added new user ID: {user.Id}";
             return RedirectToAction("All");
