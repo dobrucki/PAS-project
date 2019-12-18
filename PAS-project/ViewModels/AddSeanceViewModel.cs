@@ -11,6 +11,6 @@ namespace PAS_project.ViewModels
         [Display(Name = "CinemaHall ID")]
         public int CinemaHallId { get; set; }
         [Display(Name = "Starting time")]
-        public string DateTime { get; set; }
+        public string DateTime { get; set; }A
     }
 }
