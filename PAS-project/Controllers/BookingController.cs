@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using PAS_project.Models.Entities;
 using PAS_project.Models.Managers;
@@ -37,5 +38,17 @@ namespace PAS_project.Controllers
             TempData["comment"] = $"Successfully created reservation with id: {booking.Id}";
             return RedirectToAction("Details", "User", new {id = user.Id});
         }
+        
+        [HttpPost]
+        public IActionResult Cancel([FromRoute]int? id)
+        {
+            var evn = _cinemaEventManager.SearchAllBookings().FirstOrDefault(e => e.Id == id.Value);
+            if(evn == null) return BadRequest();
+            _cinemaEventManager.CancelABooking(_cinemaEventManager.GetEventById(id.Value));
+            return RedirectToAction("All", "User");
+        }
+        
+        
+        
     }
 }

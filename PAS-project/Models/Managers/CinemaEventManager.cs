@@ -59,7 +59,10 @@ namespace PAS_project.Models.Managers
                 _cinemaEventRepository.Delete(cinemaEvent);
             }
         }
-
+        public CinemaEvent GetEventById(int id)
+        {
+            return _cinemaEventRepository.GetById(id);
+        }
         public IEnumerable<CinemaEvent> SearchAllBookings()
         {
             return _cinemaEventRepository.GetAll();

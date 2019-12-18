@@ -122,6 +122,9 @@
                         <td>@cinemaEvent.Seance.Movie.Title</td>
                         <td>@cinemaEvent.Seance.StartingTime</td>
                         <td>@cinemaEvent.OccurenceTime</td>
+                        <td onclick="location.href='@Url.Action("Cancel", "Booking", new {id = cinemaEvent.Id})'">
+                            Cancel
+                        </td>
                     </tr>
                 }
             </table>
