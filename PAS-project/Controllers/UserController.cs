@@ -26,6 +26,11 @@ namespace PAS_project.Controllers
         [HttpPost] 
         public IActionResult CreateStandard(User user)
         {
+            var userWithThisEmail = _userManager.GetAllUsers().FirstOrDefault(e => e.Email.Equals(user.Email));
+            if (userWithThisEmail != null && userWithThisEmail.Id != user.Id)
+            {
+                ModelState.AddModelError("Email", "User with this email already exist.");
+            }
             var ms = ModelState;
             ms.Remove("PhoneNumber");
             if (!ms.IsValid) return View();
@@ -42,6 +47,11 @@ namespace PAS_project.Controllers
         [HttpPost] 
         public IActionResult CreateVip(User user)
         {
+            var userWithThisEmail = _userManager.GetAllUsers().FirstOrDefault(e => e.Email.Equals(user.Email));
+            if (userWithThisEmail != null && userWithThisEmail.Id != user.Id)
+            {
+                ModelState.AddModelError("Email", "User with this email already exist.");
+            }
             if (!ModelState.IsValid) return View();
             user.UserType = Models.Entities.User.VipUserType;
             _userManager.AddUser(user);
@@ -132,9 +142,13 @@ namespace PAS_project.Controllers
   [HttpPost]
   public ActionResult Edit(EditUserViewModel eUser)
   {
-
-      if (eUser.Type.Equals("Standard"))
+      var userWithThisEmail = _userManager.GetAllUsers().FirstOrDefault(e => e.Email.Equals(eUser.User.Email));
+      if (userWithThisEmail != null && userWithThisEmail.Id != eUser.Id)
       {
+          ModelState.AddModelError("User.Email", "User with this email already exist.");
+      }
+        if (eUser.Type.Equals("Standard"))
+        {
           var ms = ModelState;
           ms.Remove("User.PhoneNumber");
           if (ms.IsValid)
@@ -150,10 +164,10 @@ namespace PAS_project.Controllers
           {
               return View("~/Views/User/EditStandard.cshtml");
           }
-      }
+        }
       
-      else
-      {
+         else
+        {
           if (ModelState.IsValid)
           {
 
@@ -168,7 +182,7 @@ namespace PAS_project.Controllers
           {
               return View("~/Views/User/EditVip.cshtml");
           }
-      }
+          }
 
       
       return RedirectToAction("Details", new { eUser.Id });
