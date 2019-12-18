@@ -1,15 +1,15 @@
-@model AddSeanceViewModel
+@model EditSeanceViewModel
 
 @{
     ViewBag.Title = "Create Seance";
 }
 
 <form asp-controller="Seance" asp-action="Edit" method="post" class="container-fluid mt-3 p-1" style="width: 50%">
-    <input hidden asp-for=""/>
+    
     <div class="form-group row">
         <label asp-for="MovieId" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            <input asp-for="MovieId" class="form-control" placeholder="Movie ID"/>
+            <input asp-for="MovieId" class="form-control" placeholder="@Model.Seance.Movie.Id"/>
             <span asp-validation-for="MovieId" class="text-danger"></span>
         </div>
     </div>

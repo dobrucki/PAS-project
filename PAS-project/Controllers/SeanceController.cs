@@ -113,7 +113,72 @@ namespace PAS_project.Controllers
         [HttpGet]
         public IActionResult Edit([FromRoute] int? id)
         {
-            return View();
+            if (id is null) return BadRequest();
+            var seance = _seanceManager.GetSeanceById(id.Value);
+            if (seance is null) return BadRequest();
+
+            var vm = new EditSeanceViewModel
+            {
+                Seance = seance,
+                Id = seance.Id,
+                CinemaHallId = seance.CinemaHall.Id,
+                MovieId = seance.Movie.Id,
+                DateTime = seance.StartingTime.ToString()
+            };
+            
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(EditSeanceViewModel vm)
+        {
+            var seance = _seanceManager.GetSeanceById(vm.Id);
+            if (seance == null) return BadRequest();
+            
+            var movie = _movieManager.GetMovieById(vm.MovieId);
+            if (movie == null)
+                ModelState.AddModelError("MovieId", "Given movie does not exist.");
+            var cinemaHall = _cinemaHallManager.GetCinemaHallById(vm.CinemaHallId);
+            if (cinemaHall == null)
+                ModelState.AddModelError("CinemaHallId", "Given CinemaHall does not exist.");
+            DateTime? datetime = null;
+            try
+            {
+                datetime = Convert.ToDateTime(vm.DateTime);
+            }
+            catch (FormatException)
+            {
+                ModelState.AddModelError("DateTime", "Time is not formatted correctly.");
+            }
+
+            if (datetime != null && DateTime.Now >= datetime)
+            {
+                ModelState.AddModelError("DateTime", "Selected time is from the past.");
+            }
+
+            if (!ModelState.IsValid)
+                return View();
+
+            var seanceUpdate = new Seance
+            {
+                Id = vm.Id,
+                CinemaHall = cinemaHall,
+                Movie = movie,
+                StartingTime = datetime.Value
+            };
+            try
+            {
+                _seanceManager.UpdateSeance(seanceUpdate);
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid) return View();
+
+            TempData["comment"] = $"Successfully updated seance with id: {seance.Id}";
+            return RedirectToAction("All");
         }
 
     }
