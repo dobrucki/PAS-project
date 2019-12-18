@@ -110,5 +110,11 @@ namespace PAS_project.Controllers
             return RedirectToAction("All");
         }
 
+        [HttpGet]
+        public IActionResult Edit([FromRoute] int? id)
+        {
+            return View();
+        }
+
     }
 }

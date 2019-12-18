@@ -4,27 +4,31 @@
 }
 
 <div class="container list-group mt-4">
-      <form class="input-group" asp-controller="Seance" asp-action="All" method="get">
-        <input type="text" name="title" class="form-control" placeholder="Wyszukaj seans po tytule filmu">
+    <div class="row p-2 justify-content-center align-items-center">
+    <button class="btn btn-lg btn-success col-sm-2" 
+            onclick="location.href='@(Url.Action("Add", "Seance"))'">Add new Seance</button>
+    </div>
+    <form class="input-group" asp-controller="Seance" asp-action="All" method="get">
+        <input type="text" name="title" class="form-control" placeholder="Search by movie title">
         <div class="input-group-append">
-          <button class="btn btn-secondary" type="submit">
-            <i class="fa fa-search"></i>
-          </button>
+            <button class="btn btn-secondary" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
         </div>
-      </form>
+    </form>
     @foreach (var seance in Model)
-        {
-            <a asp-controller="Seance" asp-action="Details" asp-route-id="@seance.Id" 
-               class="text-dark btn list-group-item d-flex justify-content-between align-items-center p-2 my-3">
-                <div class="p-1">
-                    <div class="image-parent d-inline-block">
-                        <img src="https://dummyimage.com/120x140/000/fff.png&text=Movie" class="img-thumbnail" alt="movie">
-                    </div>
-                    <h5 class="d-inline-block ml-3 px-2">@seance.Movie.Title</h5>
+    {
+        <a asp-controller="Seance" asp-action="Details" asp-route-id="@seance.Id"
+           class="text-dark btn list-group-item d-flex justify-content-between align-items-center p-2 my-3">
+            <div class="p-1">
+                <div class="image-parent d-inline-block">
+                    <img src="https://dummyimage.com/120x140/000/fff.png&text=Movie" class="img-thumbnail" alt="movie">
                 </div>
-                <h5 class="p-2">
-                    Czas rozpoczęcia seansu: @seance.StartingTime.ToString("g")
-                </h5>
-            </a>
-        }
+                <h5 class="d-inline-block ml-3 px-2">@seance.Movie.Title</h5>
+            </div>
+            <h5 class="p-2">
+                Czas rozpoczęcia seansu: @seance.StartingTime.ToString("g")
+            </h5>
+        </a>
+    }
 </div>
