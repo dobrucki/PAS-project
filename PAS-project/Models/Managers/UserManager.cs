@@ -64,5 +64,14 @@ namespace PAS_project.Models.Managers
         {
             _userRepository.GetById(user.Id).Active = false;
         }
+        public void MakeVip(User user)
+        {
+            _userRepository.GetById(user.Id).UserType = User.VipUserType;
+        }
+        
+        public void MakeStandard(User user)
+        {
+            _userRepository.GetById(user.Id).UserType = User.StandardUserType;
+        }
     }
 }

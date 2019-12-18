@@ -40,19 +40,49 @@
             @if (! string.IsNullOrEmpty(Model.User.PhoneNumber))
             {
                 <tr>
-                    <td class="font-weight-bold">Phone number</td>
-                    <td>@Model.User.PhoneNumber</td>
+                    @{
+                        var c = "background: #F3F0F0";
+                        if (Model.User.PhoneNumber.Equals("Should be changed"))
+                        {
+                            c = "background: red";
+                        }
+                                                
+                    }
+                    <td class="font-weight-bold" style="@c">Phone number</td>
+
+                    <td style="@c">@Model.User.PhoneNumber</td>
                 </tr>
                 
             }
-                </tbody>
+            </tbody>
         </table>
     </div>
+
     <div class="pt-4 ">
-        <button onclick="location.href = '@(Url.Action("Edit", "User", new {Model.User.Id}))'"
-                class="btn btn-lg btn-info mx-4">
-            Edit
-        </button>
+        @if (Model.User.UserType.ToString().Equals("Standard"))
+                    {
+                        <button onclick="location.href = '@(Url.Action("EditStandard", "User", new {Model.User.Id}))'"
+                                class="btn btn-lg btn-info mx-4">
+                            Edit
+                        </button>
+                        <button onclick="location.href = '@(Url.Action("MakeVip", "User", new {Model.User.Id}))'"
+                                class="btn btn-lg btn-warning mx-4">
+                            Make a Vip
+                        </button>
+                    }
+                    @if (Model.User.UserType.ToString().Equals("Vip"))
+                    {
+                        <button onclick="location.href = '@(Url.Action("EditVip", "User", new {Model.User.Id}))'"
+                                class="btn btn-lg btn-info mx-4">
+                            Edit
+                        </button>
+                        <button onclick="location.href = '@(Url.Action("MakeStandard", "User", new {Model.User.Id}))';"
+                                class="btn btn-lg btn-warning mx-4">
+                            Make a Standard
+                        </button>
+                    }
+        
+
         @if (!Model.User.Active)
         {
             <button onclick="location.href = '@(Url.Action("Activate", "User", new {Model.User.Id}))'"
@@ -100,10 +130,3 @@
     }
 
 </div>
-
-<script>
-function activate() {
-    
-    
-}
-</script>
