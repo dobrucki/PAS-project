@@ -87,7 +87,7 @@ namespace PAS_project.Controllers
             if (user is null) return NotFound();
             _userManager.ActivateUser(user);
             TempData["comment"] = $"Successfully activated user with ID: {user.Id}.";
-            return RedirectToAction("All");
+            return RedirectToAction("Details", "User", new {id = user.Id});
         }
         
         public ActionResult Deactivate([FromRoute]int? id)
@@ -97,7 +97,7 @@ namespace PAS_project.Controllers
             if (user is null) return NotFound();
             _userManager.DeActivateUser(user);
             TempData["comment"] = $"Successfully deactivated user with ID: {user.Id}.";
-            return RedirectToAction("All");
+            return RedirectToAction("Details", "User", new {id = user.Id});
 
         }
 
@@ -109,7 +109,7 @@ namespace PAS_project.Controllers
             _userManager.MakeVip(user);
             user.PhoneNumber = "Should be changed";
             TempData["comment"] = $"Successfully changed type of user with ID: {user.Id}.";
-            return RedirectToAction("All");
+            return RedirectToAction("Details", "User", new {id = user.Id});
         }
         public ActionResult MakeStandard([FromRoute] int? id)
         {
@@ -119,7 +119,7 @@ namespace PAS_project.Controllers
             user.PhoneNumber = string.Empty;
             _userManager.MakeStandard(user);
             TempData["comment"] = $"Successfully changed type of user with ID: {user.Id}.";
-            return RedirectToAction("All");
+            return RedirectToAction("Details", "User", new {id = user.Id});
         }
         [HttpGet]
   public ActionResult Edit(int? id)

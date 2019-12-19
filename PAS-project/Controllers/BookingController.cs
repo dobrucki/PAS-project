@@ -39,13 +39,14 @@ namespace PAS_project.Controllers
             return RedirectToAction("Details", "User", new {id = user.Id});
         }
         
-        [HttpPost]
         public IActionResult Cancel([FromRoute]int? id)
         {
+            if (!id.HasValue) return BadRequest();
             var evn = _cinemaEventManager.SearchAllBookings().FirstOrDefault(e => e.Id == id.Value);
-            if(evn == null) return BadRequest();
+            if (evn == null) return BadRequest();
             _cinemaEventManager.CancelABooking(_cinemaEventManager.GetEventById(id.Value));
-            return RedirectToAction("All", "User");
+            TempData["comment"] = $"Successfully canceled event with id: {evn.Id}";
+            return RedirectToAction("Details", "User", new {id = evn.User.Id});
         }
         
         
