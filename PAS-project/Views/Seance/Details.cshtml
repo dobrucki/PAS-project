@@ -20,6 +20,7 @@
             class="btn btn-lg btn-info mx-4">Edit</button>
         <button onclick="location.href='@Url.Action("Book", "Seance", new {id = Model.Id})'" 
                 class="btn btn-lg btn-primary mx-4">Book it</button>
-        <button class="btn btn-lg btn-danger mx-4">Delete</button>
+        <button onclick="location.href='@Url.Action("Delete", "Seance", new {id = Model.Id})'"
+            class="btn btn-lg btn-danger mx-4">Delete</button>
     </div>
-</div>
+</div>}

@@ -181,5 +181,21 @@ namespace PAS_project.Controllers
             return RedirectToAction("All");
         }
 
+        public IActionResult Delete(int id)
+        {
+            var seance = _seanceManager.GetSeanceById(id);
+            if (seance is null)
+            {
+                TempData["comment"] = $"Can not find seance with given id: {id}";
+            }
+            else
+            {
+                _seanceManager.DeleteSeance(seance);
+                TempData["comment"] = $"Successfully deleted seance with given id: {seance.Id}";
+            }
+            return RedirectToAction("All", "Seance");
+        }
+        
+
     }
 }

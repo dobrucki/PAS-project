@@ -14,19 +14,18 @@ namespace PAS_project.Models.Managers
             && s2.StartingTime < s1.StartingTime.AddMinutes(s1.Movie.DurationTime);
         
         private readonly IDataRepository<Seance> _seanceRepository;
-        private readonly IDataRepository<Movie> _movieRepository;
+        private readonly CinemaEventManager _cinemaEventManager;
 
-        public SeanceManager(IDataRepository<Seance> seanceRepository, IDataRepository<Movie> movieRepository, 
-            IDataContext dataContext)
+        public SeanceManager(IDataRepository<Seance> seanceRepository,
+            IDataContext dataContext,
+            CinemaEventManager cinemaEventManager)
         {
             _seanceRepository = seanceRepository;
-            _movieRepository = movieRepository;
-            if (!(dataContext is null))
+            _cinemaEventManager = cinemaEventManager;
+            if (dataContext is null) return;
+            foreach (var s in dataContext.Seances)
             {
-                foreach (var s in dataContext.Seances)
-                {
-                    _seanceRepository.Add(s);
-                }
+                _seanceRepository.Add(s);
             }
         }
 
@@ -77,6 +76,11 @@ namespace PAS_project.Models.Managers
 
         public void DeleteSeance(Seance seance)
         {
+            var cinemaEvents = _cinemaEventManager.SearchBySeance(seance);
+            foreach (var cinemaEvent in cinemaEvents)
+            {
+                cinemaEvent.Seance = null;
+            }
             _seanceRepository.Delete(seance);
         }
         
