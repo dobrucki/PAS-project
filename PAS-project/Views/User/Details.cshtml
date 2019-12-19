@@ -112,6 +112,7 @@
                     <th>Movie</th>
                     <th>Seance starting time</th>
                     <th>Occurene time</th>
+                    <th>Cancel event</th>
                 </tr>
                 </thead>
                 @foreach (var cinemaEvent in  Model.CinemaEvents)
@@ -122,7 +123,7 @@
                         <td>@cinemaEvent.Seance.Movie.Title</td>
                         <td>@cinemaEvent.Seance.StartingTime</td>
                         <td>@cinemaEvent.OccurenceTime</td>
-                        <td onclick="location.href='@Url.Action("Cancel", "Booking", new {id = cinemaEvent.Id})'">
+                        <td class="font-weight-bold" style="background: red; text-align: center; " onclick="location.href='@Url.Action("Cancel", "Booking", new {id = cinemaEvent.Id})'">
                             Cancel
                         </td>
                     </tr>
