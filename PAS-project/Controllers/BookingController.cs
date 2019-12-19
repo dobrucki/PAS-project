@@ -45,7 +45,14 @@ namespace PAS_project.Controllers
             var evn = _cinemaEventManager.SearchAllBookings().FirstOrDefault(e => e.Id == id.Value);
             if (evn == null) return BadRequest();
             _cinemaEventManager.CancelABooking(_cinemaEventManager.GetEventById(id.Value));
-            TempData["comment"] = $"Successfully canceled event with id: {evn.Id}";
+            if (_cinemaEventManager.GetEventById(evn.Id) is null)
+            {
+                TempData["comment"] = $"Successfully canceled event with id: {evn.Id}";
+            }
+            else
+            {
+                TempData["comment"] = $"Could not canceled event with id: {evn.Id}";
+            }
             return RedirectToAction("Details", "User", new {id = evn.User.Id});
         }
         
