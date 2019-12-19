@@ -42,7 +42,7 @@ namespace PAS_project.Models.Managers
             string[] titles =
             {
                 "Skazani na Shawshank", "Zielona mila", "Król lew", "Gwiezdne wojny", "Lessie wróć",
-                "Władca pierścieni", "Darknight rises", "The Town", "Robotnicy wychodzący z fabryki",
+                "Władca pierścieni", "Darknight rises", "The Town", "Wyjście robotników z fabryki",
                 "Kraina Lodu 2", "Shrek", "Rio", "Joker"
             };
             return new Movie
