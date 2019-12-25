@@ -34,7 +34,8 @@ namespace PAS_project.Models.Managers
             {
                 return null;
             }
-            if ((seance.StartingTime - DateTime.UtcNow).Minutes <= user.UserType.MinutesForBooking)
+            var minutes = seance.StartingTime.Subtract(DateTime.UtcNow).TotalMinutes;
+            if (minutes <= user.UserType.MinutesForBooking)
             {
                 return null;
             }
@@ -56,8 +57,8 @@ namespace PAS_project.Models.Managers
             {
                 throw new ArgumentException($"User with id {cinemaEvent.User.Id} is inactive.");
             }
-            if ((cinemaEvent.Seance.StartingTime - DateTime.UtcNow)
-                .Minutes <= cinemaEvent.User.UserType.MinutesForCancelling)
+            var minutes = cinemaEvent.Seance.StartingTime.Subtract(DateTime.UtcNow).TotalMinutes;
+            if (minutes >= cinemaEvent.User.UserType.MinutesForCancelling)
             {
                 _cinemaEventRepository.Delete(cinemaEvent);
             }
