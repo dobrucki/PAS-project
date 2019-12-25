@@ -52,11 +52,18 @@ namespace PAS_project.Models.Managers
 
         public void CancelABooking(CinemaEvent cinemaEvent)
         {
-            if (cinemaEvent.User.Active is false) return;
+            if (cinemaEvent.User.Active is false)
+            {
+                throw new ArgumentException($"User with id {cinemaEvent.User.Id} is inactive.");
+            }
             if ((cinemaEvent.Seance.StartingTime - DateTime.UtcNow)
                 .Minutes <= cinemaEvent.User.UserType.MinutesForCancelling)
             {
                 _cinemaEventRepository.Delete(cinemaEvent);
+            }
+            else
+            {
+                throw new ArgumentException($"It is too late to cancel event with id {cinemaEvent.Id}.");
             }
         }
         public CinemaEvent GetEventById(int id)

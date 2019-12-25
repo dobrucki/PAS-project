@@ -1,3 +1,4 @@
+@using System.Text
 @model BookSeatViewModel
 
 
@@ -7,22 +8,53 @@
     <div class="row mt-4">
         @foreach (var (key, value) in Model.Seats)
         {
-            <div class="col-1">
+            var divClass = "col-1";
+            if (key.GetType() == typeof(CinemaHall.WideSeat))
+            {
+                divClass = "col-2";
+            }
+            <div class="@divClass">
                 @{ var myClass = "btn-success";}
                 @if (value)
                 {
                     myClass = "btn-danger";
                 }
-                <button class="btn @myClass m-2">
-                    @key.Row@(key.Column)
+                @{
+                    var stringBuilder = new StringBuilder();
+                    stringBuilder.Append(key.Row).Append(key.Column);
+                    var val = stringBuilder.ToString();
+                }
+                <button id="@val" booked="@value.ToString()" class="btn @myClass btn-block m-2" onclick="f('@val')">
+                    @val
                 </button>
             </div>
         }
     </div>
     <form asp-controller="Booking" asp-action="Create" method="post">
         <input asp-for="SeanceId" type="hidden" value="@Model.Seance.Id">
-        <input asp-for="UserId" type="text" class="form-control my-3 w-25" placeholder="User ID">
-        <input asp-for="SeatId" type="text" class="form control my-3 w-25" placeholder="Seat ID">
+        <input asp-for="UserId" type="text" class="form-control my-3 w-25" value="30001" placeholder="User ID">
+        <input id="SeatId" asp-for="SeatId" type="hidden" class="form control my-3 w-25" placeholder="Seat ID">
         <button type="submit" class="btn btn-primary">Book</button>
     </form>
+    
+    <script>
+        var seatInput = document.getElementById("SeatId");
+        function f(val) {
+          var oldOne = document.getElementById(seatInput.value);
+          if (oldOne !== null) {
+              oldOne.classList.remove("btn-primary");
+              if (oldOne.getAttribute("booked") === "True") oldOne.classList.add("btn-danger");
+              else oldOne.classList.add("btn-success");
+          }
+          var newOne = document.getElementById(val);
+          if (newOne.getAttribute("booked") === "False") {
+              seatInput.value = val;         
+              newOne.classList.remove("btn-success");
+              newOne.classList.remove("btn-danger");
+              newOne.classList.add("btn-primary");
+          } else {
+              seatInput.value = 0;
+          }
+        }
+    </script>
 </div>

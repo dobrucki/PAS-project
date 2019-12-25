@@ -69,14 +69,30 @@ namespace PAS_project.Models.Managers
         {
             var random = new Random();
             var seats = new List<CinemaHall.Seat>();
-            for (var i = 'A'; i < 'A' + random.Next(7, 15); i++)
+            var lc = 'A';
+            for (var i = 'A'; i < 'A' + random.Next(5, 11); i++)
             {
-                for (var j = 1; j < 9; j++)
+                for (var j = 1; j < 13; j++)
                 {
                     seats.Add(new CinemaHall.Seat
                     {
                         Row = i,
                         Column = j
+                    });
+                }
+                lc = i;
+            }
+
+            lc++;
+            for (var i = lc; i < lc + random.Next(4); i++)
+            {
+                for (var j = 1; j < 7; j++)
+                {
+                    seats.Add(new CinemaHall.WideSeat
+                    {
+                        Row = i,
+                        Column = j,
+                        Comment = "Lorem ipsum"
                     });
                 }
             }
