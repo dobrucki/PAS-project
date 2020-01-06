@@ -1,0 +1,45 @@
+@using System.Text
+@model CinemaHall
+
+<div class="container align-items-center">
+    <div class="row mt-4">
+        @foreach (var seat in Model.Seats)
+        {
+            var divClass = "col-1";
+            if (seat.GetType() == typeof(CinemaHall.WideSeat))
+            {
+                divClass = "col-2";
+            }
+            <div class="@divClass">
+                @{ var myClass = "btn-success";}
+                @{
+                    var stringBuilder = new StringBuilder();
+                    stringBuilder.Append(seat.Row).Append(seat.Column);
+                    var val = stringBuilder.ToString();
+                }
+                <button id="@val" class="btn @myClass btn-block m-2" onclick="f('@val')">
+                    @val
+                </button>
+            </div>
+        }
+    </div>
+    <form asp-controller="Booking" asp-action="Create" method="post" class="d-flex">
+        <input id="SeatId" type="hidden" class="form control my-3 w-25" placeholder="Seat ID">
+        <button type="submit" class="btn btn-primary">Edit Seat</button>
+    </form>
+    
+    <script>
+        var seatInput = document.getElementById("SeatId");
+        function f(val) {
+          var oldOne = document.getElementById(seatInput.value);
+          if (oldOne !== null) {
+              oldOne.classList.remove("btn-primary");
+              oldOne.classList.add("btn-success");
+          }
+          var newOne = document.getElementById(val);
+          seatInput.value = val;         
+          newOne.classList.remove("btn-success");
+          newOne.classList.add("btn-primary");
+        }
+    </script>
+</div>
