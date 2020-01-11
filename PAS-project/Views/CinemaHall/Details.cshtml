@@ -1,9 +1,9 @@
 @using System.Text
-@model CinemaHall
+@model EditCinemaHallViewModel
 
 <div class="container align-items-center">
     <div class="row mt-4">
-        @foreach (var seat in Model.Seats)
+        @foreach (var seat in Model.CinemaHall.Seats)
         {
             var divClass = "col-1";
             if (seat.GetType() == typeof(CinemaHall.WideSeat))
@@ -23,8 +23,9 @@
             </div>
         }
     </div>
-    <form asp-controller="Booking" asp-action="Create" method="post" class="d-flex">
-        <input id="SeatId" type="hidden" class="form control my-3 w-25" placeholder="Seat ID">
+    <form asp-controller="CinemaHall" asp-action="Edit" method="get" class="d-flex">
+        <input asp-for="CinemaHallId" type="hidden" value="@Model.CinemaHall.Id">
+        <input asp-for="SeatId" id="SeatId" type="hidden">
         <button type="submit" class="btn btn-primary">Edit Seat</button>
     </form>
     

@@ -147,8 +147,8 @@ namespace PAS_project.Controllers
       {
           ModelState.AddModelError("User.Email", "User with this email already exist.");
       }
-        if (eUser.Type.Equals("Standard"))
-        {
+      if (eUser.Type.Equals("Standard"))
+      {
           var ms = ModelState;
           ms.Remove("User.PhoneNumber");
           if (ms.IsValid)
@@ -164,10 +164,10 @@ namespace PAS_project.Controllers
           {
               return View("~/Views/User/EditStandard.cshtml");
           }
-        }
+      }
       
-         else
-        {
+      else
+      {
           if (ModelState.IsValid)
           {
 
@@ -182,7 +182,7 @@ namespace PAS_project.Controllers
           {
               return View("~/Views/User/EditVip.cshtml");
           }
-          }
+      }
 
       
       return RedirectToAction("Details", new { eUser.Id });

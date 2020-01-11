@@ -77,7 +77,8 @@ namespace PAS_project.Models.Managers
                     seats.Add(new CinemaHall.Seat
                     {
                         Row = i,
-                        Column = j
+                        Column = j,
+                        PlainComment = "Lorem ipsum"
                     });
                 }
                 lc = i;
@@ -92,7 +93,8 @@ namespace PAS_project.Models.Managers
                     {
                         Row = i,
                         Column = j,
-                        Comment = "Lorem ipsum"
+                        PlainComment = "Lorem ipsum",
+                        ExtendedComment = "Lorem ipsum"
                     });
                 }
             }
