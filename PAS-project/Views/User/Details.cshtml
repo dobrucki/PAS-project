@@ -11,38 +11,38 @@
             <tbody>
             <tr>
                 <td class="font-weight-bold">ID</td>
-                <td>@Model.User.Id</td>
+                <td>@Model.ApplicationUser.Id</td>
             </tr>
             <tr>
                 <td class="font-weight-bold">First name</td>
-                <td>@Model.User.FirstName</td>
+                <td>@Model.ApplicationUser.FirstName</td>
             </tr>
             <tr>
                 <td class="font-weight-bold">Last name</td>
-                <td>@Model.User.LastName</td>
+                <td>@Model.ApplicationUser.LastName</td>
             </tr>
             <tr>
                 <td class="font-weight-bold">Email</td>
-                <td>@Model.User.Email</td>
+                <td>@Model.ApplicationUser.Email</td>
             </tr>
             <tr>
                 <td class="font-weight-bold">User type</td>
-                <td>@Model.User.UserType.ToString()</td>
+                <td>@Model.ApplicationUser.UserType.ToString()</td>
             </tr>
             <tr>
                 <td class="font-weight-bold">User acces level</td>
-                <td>@Model.User.AccessLevel</td>
+                <td>@Model.ApplicationUser.AccessLevel</td>
             </tr>
             <tr>
                 <td class="font-weight-bold">Active</td>
-                <td>@Model.User.Active</td>
+                <td>@Model.ApplicationUser.Active</td>
             </tr>
-            @if (! string.IsNullOrEmpty(Model.User.PhoneNumber))
+            @if (! string.IsNullOrEmpty(Model.ApplicationUser.PhoneNumber))
             {
                 <tr>
                     @{
                         var c = "background: #F3F0F0";
-                        if (Model.User.PhoneNumber.Equals("Should be changed"))
+                        if (Model.ApplicationUser.PhoneNumber.Equals("Should be changed"))
                         {
                             c = "background: red";
                         }
@@ -50,7 +50,7 @@
                     }
                     <td class="font-weight-bold" style="@c">Phone number</td>
 
-                    <td style="@c">@Model.User.PhoneNumber</td>
+                    <td style="@c">@Model.ApplicationUser.PhoneNumber</td>
                 </tr>
                 
             }
@@ -59,40 +59,40 @@
     </div>
 
     <div class="pt-4 ">
-        @if (Model.User.UserType.ToString().Equals("Standard"))
+        @if (Model.ApplicationUser.UserType.ToString().Equals("Standard"))
                     {
-                        <button onclick="location.href = '@(Url.Action("Edit", "User", new {Model.User.Id}))'"
+                        <button onclick="location.href = '@(Url.Action("Edit", "User", new {Model.ApplicationUser.Id}))'"
                                 class="btn btn-lg btn-info mx-4">
                             Edit
                         </button>
-                        <button onclick="location.href = '@(Url.Action("MakeVip", "User", new {Model.User.Id}))'"
+                        <button onclick="location.href = '@(Url.Action("MakeVip", "User", new {Model.ApplicationUser.Id}))'"
                                 class="btn btn-lg btn-warning mx-4">
                             Make a Vip
                         </button>
                     }
-                    @if (Model.User.UserType.ToString().Equals("Vip"))
+                    @if (Model.ApplicationUser.UserType.ToString().Equals("Vip"))
                     {
-                        <button onclick="location.href = '@(Url.Action("Edit", "User", new {Model.User.Id}))'"
+                        <button onclick="location.href = '@(Url.Action("Edit", "User", new {Model.ApplicationUser.Id}))'"
                                 class="btn btn-lg btn-info mx-4">
                             Edit
                         </button>
-                        <button onclick="location.href = '@(Url.Action("MakeStandard", "User", new {Model.User.Id}))';"
+                        <button onclick="location.href = '@(Url.Action("MakeStandard", "User", new {Model.ApplicationUser.Id}))';"
                                 class="btn btn-lg btn-warning mx-4">
                             Make a Standard
                         </button>
                     }
         
 
-        @if (!Model.User.Active)
+        @if (!Model.ApplicationUser.Active)
         {
-            <button onclick="location.href = '@(Url.Action("Activate", "User", new {Model.User.Id}))'"
+            <button onclick="location.href = '@(Url.Action("Activate", "User", new {Model.ApplicationUser.Id}))'"
                     class="btn btn-lg btn-success mx-4">
                 Activate
             </button>
         }
-        @if (Model.User.Active)
+        @if (Model.ApplicationUser.Active)
         {
-            <button onclick="location.href = '@(Url.Action("Deactivate", "User", new {Model.User.Id}))';"
+            <button onclick="location.href = '@(Url.Action("Deactivate", "User", new {Model.ApplicationUser.Id}))';"
                     class="btn btn-lg btn-danger mx-4">
                 Deactivate
             </button>

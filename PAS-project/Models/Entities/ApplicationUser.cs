@@ -1,10 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using PAS_project.Models.Entities.UserTypes;
+using Microsoft.AspNetCore.Identity;
 
 namespace PAS_project.Models.Entities
 {
-    public class User : Entity
+    public class ApplicationUser : Entity
     {
 
         public static readonly IUserType StandardUserType = new StandardUserType();
@@ -19,6 +20,7 @@ namespace PAS_project.Models.Entities
         public string LastName { get; set; }
         [Required]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail is not valid.")]
+        public string Name { get; set; }
         public string Email { get; set; }
         [Required(ErrorMessage = "You must provide a phone number")]
         [Display(Name = "Phone Number")]
@@ -29,7 +31,7 @@ namespace PAS_project.Models.Entities
         public UserAccessLevel AccessLevel { get; set; }
         public bool Active { get; set; }
 
-        public User()
+        public ApplicationUser()
         {
             UserType = StandardUserType;
             PhoneNumber = string.Empty;

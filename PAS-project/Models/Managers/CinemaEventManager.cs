@@ -22,9 +22,9 @@ namespace PAS_project.Models.Managers
             }
         }
 
-        public CinemaEvent CreateABooking(User user, Seance seance, CinemaHall.Seat seat)
+        public CinemaEvent CreateABooking(ApplicationUser applicationUser, Seance seance, CinemaHall.Seat seat)
         {
-            if (user.Active is false) return null;
+            if (applicationUser.Active is false) return null;
             var events = _cinemaEventRepository.GetAll().ToList();
             var correspondingEvents = events
                 .Where(e => e.Seance == seance)
@@ -35,7 +35,7 @@ namespace PAS_project.Models.Managers
                 return null;
             }
             var minutes = seance.StartingTime.Subtract(DateTime.UtcNow).TotalMinutes;
-            if (minutes <= user.UserType.MinutesForBooking)
+            if (minutes <= applicationUser.UserType.MinutesForBooking)
             {
                 return null;
             }
@@ -43,7 +43,7 @@ namespace PAS_project.Models.Managers
             {
                 // ReSharper disable once PossibleNullReferenceException
                 Id = events.LastOrDefault() is null ? 1 : events.LastOrDefault().Id + 1,
-                User = user,
+                ApplicationUser = applicationUser,
                 Seat = seat,
                 Seance = seance
             };
@@ -53,12 +53,12 @@ namespace PAS_project.Models.Managers
 
         public void CancelABooking(CinemaEvent cinemaEvent)
         {
-            if (cinemaEvent.User.Active is false)
+            if (cinemaEvent.ApplicationUser.Active is false)
             {
-                throw new ArgumentException($"User with id {cinemaEvent.User.Id} is inactive.");
+                throw new ArgumentException($"User with id {cinemaEvent.ApplicationUser.Id} is inactive.");
             }
             var minutes = cinemaEvent.Seance.StartingTime.Subtract(DateTime.UtcNow).TotalMinutes;
-            if (minutes >= cinemaEvent.User.UserType.MinutesForCancelling)
+            if (minutes >= cinemaEvent.ApplicationUser.UserType.MinutesForCancelling)
             {
                 _cinemaEventRepository.Delete(cinemaEvent);
             }
@@ -76,9 +76,9 @@ namespace PAS_project.Models.Managers
             return _cinemaEventRepository.GetAll();
         }
 
-        public IEnumerable<CinemaEvent> SearchByUser(User user)
+        public IEnumerable<CinemaEvent> SearchByUser(ApplicationUser applicationUser)
         {
-            bool Filter(CinemaEvent e) => e.User == user;
+            bool Filter(CinemaEvent e) => e.ApplicationUser == applicationUser;
             return _cinemaEventRepository.GetAll(Filter);
         }
 

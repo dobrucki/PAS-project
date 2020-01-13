@@ -9,9 +9,9 @@ namespace PAS_project.Models.Managers
 {
     public class UserManager
     {
-        private readonly IDataRepository<User> _userRepository;
+        private readonly IDataRepository<ApplicationUser> _userRepository;
 
-        public UserManager(IDataRepository<User> userRepository, IDataContext dataContext)
+        public UserManager(IDataRepository<ApplicationUser> userRepository, IDataContext dataContext)
         {
             _userRepository = userRepository;
             if (!(dataContext is null))
@@ -23,55 +23,55 @@ namespace PAS_project.Models.Managers
             }
         }
 
-        public void AddUser(User user)
+        public void AddUser(ApplicationUser applicationUser)
         {
-            _userRepository.Add(user);
+            _userRepository.Add(applicationUser);
         }
 
-        public User GetUserById(int id)
+        public ApplicationUser GetUserById(int id)
         {
             return _userRepository.GetById(id);
         }
 
-        public User GetUserByEmail(string email)
+        public ApplicationUser GetUserByEmail(string email)
         {
-            bool Filter(User user) => user.Email == email; 
+            bool Filter(ApplicationUser user) => user.Email == email; 
             return _userRepository.GetAll(Filter).First();
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public IEnumerable<ApplicationUser> GetAllUsers()
         {
             return _userRepository.GetAll();
         }
 
-        public IEnumerable<User> FilterUsersByEmail(string email)
+        public IEnumerable<ApplicationUser> FilterUsersByEmail(string email)
         {
-            bool Filter(User user) => user.Email.ToLower().Contains(email.ToLower());
+            bool Filter(ApplicationUser user) => user.Email.ToLower().Contains(email.ToLower());
             return _userRepository.GetAll(Filter);
         }
         
-        public void UpdateUser(User user)
+        public void UpdateUser(ApplicationUser applicationUser)
         {
-            _userRepository.Update(user);
+            _userRepository.Update(applicationUser);
         }
 
-        public void ActivateUser(User user)
+        public void ActivateUser(ApplicationUser applicationUser)
         {
-            _userRepository.GetById(user.Id).Active = true;
+            _userRepository.GetById(applicationUser.Id).Active = true;
         }
         
-        public void DeActivateUser(User user)
+        public void DeActivateUser(ApplicationUser applicationUser)
         {
-            _userRepository.GetById(user.Id).Active = false;
+            _userRepository.GetById(applicationUser.Id).Active = false;
         }
-        public void MakeVip(User user)
+        public void MakeVip(ApplicationUser applicationUser)
         {
-            _userRepository.GetById(user.Id).UserType = User.VipUserType;
+            _userRepository.GetById(applicationUser.Id).UserType = ApplicationUser.VipUserType;
         }
         
-        public void MakeStandard(User user)
+        public void MakeStandard(ApplicationUser applicationUser)
         {
-            _userRepository.GetById(user.Id).UserType = User.StandardUserType;
+            _userRepository.GetById(applicationUser.Id).UserType = ApplicationUser.StandardUserType;
         }
     }
 }

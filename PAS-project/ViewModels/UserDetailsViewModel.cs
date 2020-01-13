@@ -5,7 +5,7 @@ namespace PAS_project.ViewModels
 {
     public class UserDetailsViewModel
     {
-        public User User { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
         public IEnumerable<CinemaEvent> CinemaEvents { get; set; }
         

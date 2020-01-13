@@ -24,18 +24,18 @@ namespace PAS_project.Controllers
         }
         
         [HttpPost] 
-        public IActionResult CreateStandard(User user)
+        public IActionResult CreateStandard(ApplicationUser applicationUser)
         {
-            var userWithThisEmail = _userManager.GetAllUsers().FirstOrDefault(e => e.Email.Equals(user.Email));
-            if (userWithThisEmail != null && userWithThisEmail.Id != user.Id)
+            var userWithThisEmail = _userManager.GetAllUsers().FirstOrDefault(e => e.Email.Equals(applicationUser.Email));
+            if (userWithThisEmail != null && userWithThisEmail.Id != applicationUser.Id)
             {
                 ModelState.AddModelError("Email", "User with this email already exist.");
             }
             var ms = ModelState;
             ms.Remove("PhoneNumber");
             if (!ms.IsValid) return View();
-            _userManager.AddUser(user);
-            TempData["comment"] = $"Successfully added new user ID: {user.Id}";
+            _userManager.AddUser(applicationUser);
+            TempData["comment"] = $"Successfully added new user ID: {applicationUser.Id}";
             return RedirectToAction("All");
         }
         [HttpGet]
@@ -45,17 +45,17 @@ namespace PAS_project.Controllers
         }
         
         [HttpPost] 
-        public IActionResult CreateVip(User user)
+        public IActionResult CreateVip(ApplicationUser applicationUser)
         {
-            var userWithThisEmail = _userManager.GetAllUsers().FirstOrDefault(e => e.Email.Equals(user.Email));
-            if (userWithThisEmail != null && userWithThisEmail.Id != user.Id)
+            var userWithThisEmail = _userManager.GetAllUsers().FirstOrDefault(e => e.Email.Equals(applicationUser.Email));
+            if (userWithThisEmail != null && userWithThisEmail.Id != applicationUser.Id)
             {
                 ModelState.AddModelError("Email", "User with this email already exist.");
             }
             if (!ModelState.IsValid) return View();
-            user.UserType = Models.Entities.User.VipUserType;
-            _userManager.AddUser(user);
-            TempData["comment"] = $"Successfully added new user ID: {user.Id}";
+            applicationUser.UserType = Models.Entities.ApplicationUser.VipUserType;
+            _userManager.AddUser(applicationUser);
+            TempData["comment"] = $"Successfully added new user ID: {applicationUser.Id}";
             return RedirectToAction("All");
         }
 
@@ -73,7 +73,7 @@ namespace PAS_project.Controllers
             if (user is null) return NotFound();
             var userDetailsViewModel = new UserDetailsViewModel
             {
-                User = user, 
+                ApplicationUser = user, 
                 CinemaEvents = _cinemaEventManager.SearchByUser(user)
             };
             
@@ -131,7 +131,7 @@ namespace PAS_project.Controllers
       var editUser = new EditUserViewModel
       {
           Id = id.Value,
-          User = user,
+          ApplicationUser = user,
           Type = user.UserType.ToString(),
           Activity = user.Active
       };
@@ -142,7 +142,7 @@ namespace PAS_project.Controllers
   [HttpPost]
   public ActionResult Edit(EditUserViewModel eUser)
   {
-      var userWithThisEmail = _userManager.GetAllUsers().FirstOrDefault(e => e.Email.Equals(eUser.User.Email));
+      var userWithThisEmail = _userManager.GetAllUsers().FirstOrDefault(e => e.Email.Equals(eUser.ApplicationUser.Email));
       if (userWithThisEmail != null && userWithThisEmail.Id != eUser.Id)
       {
           ModelState.AddModelError("User.Email", "User with this email already exist.");
@@ -154,10 +154,10 @@ namespace PAS_project.Controllers
           if (ms.IsValid)
           {
 
-              eUser.User.Id = eUser.Id;
-              eUser.User.UserType = Models.Entities.User.StandardUserType;
-              eUser.User.Active = eUser.Activity;
-              _userManager.UpdateUser(eUser.User);
+              eUser.ApplicationUser.Id = eUser.Id;
+              eUser.ApplicationUser.UserType = Models.Entities.ApplicationUser.StandardUserType;
+              eUser.ApplicationUser.Active = eUser.Activity;
+              _userManager.UpdateUser(eUser.ApplicationUser);
               
           }
           else
@@ -172,10 +172,10 @@ namespace PAS_project.Controllers
           {
 
               
-              eUser.User.Id = eUser.Id;
-              eUser.User.UserType = Models.Entities.User.VipUserType;
-              eUser.User.Active = eUser.Activity;
-              _userManager.UpdateUser(eUser.User);
+              eUser.ApplicationUser.Id = eUser.Id;
+              eUser.ApplicationUser.UserType = Models.Entities.ApplicationUser.VipUserType;
+              eUser.ApplicationUser.Active = eUser.Activity;
+              _userManager.UpdateUser(eUser.ApplicationUser);
               
           }
           else

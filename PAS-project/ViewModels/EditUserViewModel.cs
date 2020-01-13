@@ -6,7 +6,7 @@ namespace PAS_project.ViewModels
     public class EditUserViewModel
     {
         public int Id { get; set; }
-        public User User { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
         public string Type { get; set; }
         public bool Activity { get; set; }
 

@@ -12,14 +12,14 @@ namespace PAS_project.Models.Managers
     {
         public class DataWrapper
         {
-            public IEnumerable<User> Users { get; internal set; }
+            public IEnumerable<ApplicationUser> Users { get; internal set; }
             public IEnumerable<Movie> Movies { get; internal set; }
             public IEnumerable<Seance> Seances { get; internal set; }
             public IEnumerable<CinemaHall> CinemaHalls { get; internal set; }
             public IEnumerable<CinemaEvent> CinemaEvents { get; internal set;}
         }
         
-        private static User CreateRandomUser()
+        private static ApplicationUser CreateRandomUser()
         {
             string[] firstNames = {"Michal", "Mateusz", "Kamil", "Alojzy", "Sebastian", "Krystian", "Szymon"};
             string[] lastNames = {"Kowalski", "Wasilewski", "Dobrucki", "Celejewski", "Nowak", "Trzmiel"};
@@ -28,7 +28,7 @@ namespace PAS_project.Models.Managers
             var firstName = firstNames[random.Next(firstNames.Length)];
             var lastName = lastNames[random.Next(lastNames.Length)];
             var email = $"{firstName.ToLower()}.{lastName.ToLower()}@example.com";
-            return new User
+            return new ApplicationUser
             {
                 FirstName = firstName,
                 LastName = lastName,
@@ -119,12 +119,12 @@ namespace PAS_project.Models.Managers
             };
         }
 
-        private static CinemaEvent CreateRandomCinemaEvent(User user, CinemaHall cinemaHall, Seance seance)
+        private static CinemaEvent CreateRandomCinemaEvent(ApplicationUser applicationUser, CinemaHall cinemaHall, Seance seance)
         {
             var random = new Random();
             return new CinemaEvent
             {
-                User = user,
+                ApplicationUser = applicationUser,
                 Seat = cinemaHall.Seats.ToList()[random.Next(cinemaHall.Seats.Count())],
                 Seance = seance
             };
@@ -134,7 +134,7 @@ namespace PAS_project.Models.Managers
         {
             var random = new Random();
             
-            var users = new List<User>();
+            var users = new List<ApplicationUser>();
             for (var i = 0; i < random.Next(20, 32);)
             {
                 var user = CreateRandomUser();

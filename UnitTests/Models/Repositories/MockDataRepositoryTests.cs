@@ -13,9 +13,9 @@ namespace UnitTests.Models.Repositories
         public void Add_ValidArgument_ArgumentAddedToList()
         {
             // Arrange
-            var repository = new MockDataRepository<User>();
+            var repository = new MockDataRepository<ApplicationUser>();
             const int id = 1;
-            var entity = new User {};
+            var entity = new ApplicationUser {};
 
             // Act
             repository.Add(entity);
@@ -28,7 +28,7 @@ namespace UnitTests.Models.Repositories
         public void Add_NullArgument_ExceptionThrown()
         {
             // Arrange
-            var repository = new MockDataRepository<User>();
+            var repository = new MockDataRepository<ApplicationUser>();
             
             // Act
             void Action() => repository.Add(null);
@@ -41,9 +41,9 @@ namespace UnitTests.Models.Repositories
         public void Add_SameId_ExceptionNotThrown()
         {
             // Arrange
-            var repository = new MockDataRepository<User>();
-            var user1 = new User {Id = 100};
-            var user2 = new User {Id = 100};
+            var repository = new MockDataRepository<ApplicationUser>();
+            var user1 = new ApplicationUser {Id = 100};
+            var user2 = new ApplicationUser {Id = 100};
             repository.Add(user1);
 
             // Act
@@ -57,12 +57,12 @@ namespace UnitTests.Models.Repositories
         public void GetById_NotValidId_NullObjectReturned()
         {
             // Arrange
-            var repository = new MockDataRepository<User>();
-            var user = new User {Id = 100};
+            var repository = new MockDataRepository<ApplicationUser>();
+            var user = new ApplicationUser {Id = 100};
             repository.Add(user);
             
             // Act
-            User User() => repository.GetById(int.MaxValue);
+            ApplicationUser User() => repository.GetById(int.MaxValue);
             
             // Assert
             Assert.IsNull(User());
@@ -72,10 +72,10 @@ namespace UnitTests.Models.Repositories
         public void Update_ValidArgument_NoExceptionsThrown()
         {
             // Arrange
-            var repository = new MockDataRepository<User>();
-            var user = new User {Email = "john@example.com"};
+            var repository = new MockDataRepository<ApplicationUser>();
+            var user = new ApplicationUser {Email = "john@example.com"};
             const string updatedEmail = "jedrzej@example.com";
-            var updatedUser = new User {Id = 1, Email = updatedEmail};
+            var updatedUser = new ApplicationUser {Id = 1, Email = updatedEmail};
             repository.Add(user);
             
             // Act

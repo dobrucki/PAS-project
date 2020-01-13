@@ -53,7 +53,7 @@ namespace PAS_project.Controllers
             {
                 TempData["comment"] = $"Could not canceled event with id: {evn.Id}";
             }
-            return RedirectToAction("Details", "User", new {id = evn.User.Id});
+            return RedirectToAction("Details", "User", new {id = evn.ApplicationUser.Id});
         }
         
         

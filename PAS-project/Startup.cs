@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using PAS_project.Controllers;
 using PAS_project.Models;
 using PAS_project.Models.Entities;
+using PAS_project.Models.Identity;
 using PAS_project.Models.Managers;
 using PAS_project.Models.Repositories;
 
@@ -31,6 +33,11 @@ namespace PAS_project
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddTransient<IUserStore<ApplicationUser>, UserStore>();
+            services.AddTransient<IRoleStore<ApplicationRole>, RoleStore>();
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>().AddDefaultTokenProviders();
             
             // DI
             services.AddSingleton<IDataRepository<Movie>>(
@@ -39,8 +46,8 @@ namespace PAS_project
             services.AddSingleton<IDataRepository<Seance>>(
                 x => ActivatorUtilities.CreateInstance<MockDataRepository<Seance>>(x, 20000));
             services.AddSingleton<SeanceManager>();
-            services.AddSingleton<IDataRepository<User>>(
-                x => ActivatorUtilities.CreateInstance<MockDataRepository<User>>(x, 30000));
+            services.AddSingleton<IDataRepository<ApplicationUser>>(
+                x => ActivatorUtilities.CreateInstance<MockDataRepository<ApplicationUser>>(x, 30000));
             services.AddSingleton<UserManager>();
             services.AddSingleton<IDataContext, DataContext>(x => RandomDataFactory.GenerateRandomData());
             services.AddSingleton<IDataRepository<CinemaEvent>>(
@@ -49,6 +56,8 @@ namespace PAS_project
             services.AddSingleton<IDataRepository<CinemaHall>>(
                 x => ActivatorUtilities.CreateInstance<MockDataRepository<CinemaHall>>(x, 50000));
             services.AddSingleton<CinemaHallManager>();
+            services.AddSingleton<IDataRepository<ApplicationRole>>(
+                x => ActivatorUtilities.CreateInstance<MockDataRepository<ApplicationRole>>(x, 60000));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

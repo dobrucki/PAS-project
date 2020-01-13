@@ -5,7 +5,7 @@ namespace PAS_project.Models.Managers
 {
     internal class DataContext : IDataContext
     {
-        public IEnumerable<User> Users { get; internal set; }
+        public IEnumerable<ApplicationUser> Users { get; internal set; }
         public IEnumerable<Movie> Movies { get; internal set; }
         public IEnumerable<Seance> Seances { get; internal set; }
         public IEnumerable<CinemaHall> CinemaHalls { get; internal set; }
