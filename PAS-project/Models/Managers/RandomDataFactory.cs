@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Identity;
 using PAS_project.Models.Entities;
 using PAS_project.Models.Repositories;
 
@@ -10,6 +11,7 @@ namespace PAS_project.Models.Managers
 {
     internal static class RandomDataFactory
     {
+
         public class DataWrapper
         {
             public IEnumerable<ApplicationUser> Users { get; internal set; }
@@ -27,12 +29,15 @@ namespace PAS_project.Models.Managers
             var random = new Random();
             var firstName = firstNames[random.Next(firstNames.Length)];
             var lastName = lastNames[random.Next(lastNames.Length)];
-            var email = $"{firstName.ToLower()}.{lastName.ToLower()}@example.com";
+            var email = "admin@example.com";
             return new ApplicationUser
             {
                 FirstName = firstName,
                 LastName = lastName,
-                Email = email
+                Email = email,
+                Password = "AQAAAAEAACcQAAAAELchcUyDbMj+/SMAB1IOBEijR4b4UoHGpJTK8A7qokIVX4uHE0Jmjwypltx/sdyn5w==",
+                UserName = email,
+                Active = true
             };
         }
 
@@ -135,7 +140,7 @@ namespace PAS_project.Models.Managers
             var random = new Random();
             
             var users = new List<ApplicationUser>();
-            for (var i = 0; i < random.Next(20, 32);)
+            for (var i = 0; i < 1;)
             {
                 var user = CreateRandomUser();
                 if (users.Any(u => u.Email == user.Email)) continue;
