@@ -1,4 +1,5 @@
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PAS_project.Models.Entities;
 using PAS_project.Models.Managers;
@@ -6,6 +7,7 @@ using PAS_project.ViewModels;
 
 namespace PAS_project.Controllers
 {
+    [Authorize]
     public class UserController: Controller
     {
         private readonly UserManager _userManager;

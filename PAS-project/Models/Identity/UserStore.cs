@@ -8,7 +8,7 @@ using PAS_project.Models.Repositories;
 
 namespace PAS_project.Models.Identity
 {
-    public class UserStore : IUserStore<ApplicationUser>
+    public class UserStore : IUserStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>
     {
         private readonly IDataRepository<ApplicationUser> _repository;
         
@@ -44,12 +44,12 @@ namespace PAS_project.Models.Identity
         {
             return _repository.GetAll()
                 .FirstOrDefault(u => string
-                    .Equals(u.Name, normalizedUserName, StringComparison.CurrentCultureIgnoreCase));
+                    .Equals(u.UserName, normalizedUserName, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public async Task<string> GetNormalizedUserNameAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
-            return user.Name.ToUpper();
+            return user.UserName.ToUpper();
         }
 
         public Task<string> GetUserIdAsync(ApplicationUser user, CancellationToken cancellationToken)
@@ -59,7 +59,7 @@ namespace PAS_project.Models.Identity
 
         public async Task<string> GetUserNameAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
-            return user.Name;
+            return user.UserName;
         }
 
         public async Task SetNormalizedUserNameAsync(ApplicationUser user, string normalizedName, CancellationToken cancellationToken)
@@ -68,13 +68,28 @@ namespace PAS_project.Models.Identity
 
         public async Task SetUserNameAsync(ApplicationUser user, string userName, CancellationToken cancellationToken)
         {
-            user.Name = userName;
+            user.UserName = userName;
         }
 
         public async Task<IdentityResult> UpdateAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
             _repository.Update(user);
             return IdentityResult.Success;
+        }
+
+        public async Task<string> GetPasswordHashAsync(ApplicationUser user, CancellationToken cancellationToken)
+        {
+            return user.Password;
+        }
+
+        public async Task<bool> HasPasswordAsync(ApplicationUser user, CancellationToken cancellationToken)
+        {
+            return !string.IsNullOrEmpty(user.Password);
+        }
+
+        public async Task SetPasswordHashAsync(ApplicationUser user, string passwordHash, CancellationToken cancellationToken)
+        {
+            user.Password = passwordHash;
         }
     }
 }

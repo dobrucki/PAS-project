@@ -20,7 +20,6 @@ namespace PAS_project.Models.Entities
         public string LastName { get; set; }
         [Required]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail is not valid.")]
-        public string Name { get; set; }
         public string Email { get; set; }
         [Required(ErrorMessage = "You must provide a phone number")]
         [Display(Name = "Phone Number")]
@@ -30,6 +29,9 @@ namespace PAS_project.Models.Entities
         public IUserType UserType { get; set; }
         public UserAccessLevel AccessLevel { get; set; }
         public bool Active { get; set; }
+        
+        public string Password { get; set; }
+        public string UserName { get; set; }
 
         public ApplicationUser()
         {

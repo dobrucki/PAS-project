@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PAS_project.Models.Entities;
 using PAS_project.Models.Managers;
@@ -6,6 +7,7 @@ using PAS_project.ViewModels;
 
 namespace PAS_project.Controllers
 {
+    [Authorize]
     public class CinemaHallController : Controller
     {
         private readonly CinemaHallManager _cinemaHallManager;

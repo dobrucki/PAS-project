@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using PAS_project.Models.Entities;
@@ -8,6 +9,7 @@ using PAS_project.ViewModels;
 
 namespace PAS_project.Controllers
 {
+    [Authorize]
     public class SeanceController : Controller
     {
         private readonly SeanceManager _seanceManager;
@@ -26,7 +28,7 @@ namespace PAS_project.Controllers
             _cinemaHallManager = cinemaHallManager;
         }
 
-
+        [AllowAnonymous]
         public IActionResult All([FromQuery] string title)
         {
             if (title == null)
@@ -35,6 +37,7 @@ namespace PAS_project.Controllers
             return View(seances.OrderBy(x => x.StartingTime));
         }
 
+        [AllowAnonymous]
         public IActionResult Details([FromRoute] int? id)
         {
             if (id is null) return NotFound();

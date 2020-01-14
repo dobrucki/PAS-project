@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -32,13 +34,17 @@ namespace PAS_project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            
 
             services.AddTransient<IUserStore<ApplicationUser>, UserStore>();
             services.AddTransient<IRoleStore<ApplicationRole>, RoleStore>();
 
             services.AddIdentity<ApplicationUser, ApplicationRole>().AddDefaultTokenProviders();
-            
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = new PathString("/Account/SignIn");
+            });
+            services.AddMvc(option => option.EnableEndpointRouting = false);
             // DI
             services.AddSingleton<IDataRepository<Movie>>(
                 x => ActivatorUtilities.CreateInstance<MockDataRepository<Movie>>(x, 10000));
@@ -71,15 +77,27 @@ namespace PAS_project
             {
                 app.UseExceptionHandler("Home/Error");
             }
+
+            
             app.UseStaticFiles();
 
-            app.UseRouting();
+            app.UseAuthentication();
 
-            app.UseEndpoints(endpoints =>
+            app.UseAuthorization();
+
+            app.UseMvc(routes =>
                 {
-                    endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                    routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 }
             );
+
+//            app.UseRouting();
+//
+//            app.UseEndpoints(endpoints =>
+//                {
+//                    endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+//                }
+//            );
         }
     }
 }
