@@ -113,11 +113,24 @@
                 </thead>
                 @foreach (var cinemaEvent in  Model.CinemaEvents)
                 {
+                    
+                        string startingTime = "null";
+                        string cinemahallName = "null";
+                        string title = "null";
+                    {
+                        if (cinemaEvent.Seance != null)
+                        {
+                            startingTime = cinemaEvent.Seance.StartingTime.ToString();
+                            cinemahallName = cinemaEvent.Seance.CinemaHall.Name;
+                            title = cinemaEvent.Seance.Movie.Title;
+                        }
+                    }
+                    ;
                     <tr>
-                        <td>@cinemaEvent.Seance.CinemaHall.Name</td>
+                        <td>@cinemahallName</td>
                         <td>@cinemaEvent.Seat.Row@cinemaEvent.Seat.Column</td>
-                        <td>@cinemaEvent.Seance.Movie.Title</td>
-                        <td>@cinemaEvent.Seance.StartingTime</td>
+                        <td>@title</td>
+                        <td>@startingTime</td>
                         <td>@cinemaEvent.OccurenceTime</td>
                         <td class="font-weight-bold" style="background: red; text-align: center; " onclick="location.href='@Url.Action("Cancel", "Booking", new {id = cinemaEvent.Id})'">
                             Cancel
