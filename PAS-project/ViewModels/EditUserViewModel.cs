@@ -8,6 +8,8 @@ namespace PAS_project.ViewModels
         public int Id { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public string Type { get; set; }
+        
+        public string Role { get; set; }
         public bool Activity { get; set; }
 
     }

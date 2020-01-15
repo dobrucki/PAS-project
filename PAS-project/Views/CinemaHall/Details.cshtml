@@ -1,5 +1,6 @@
 @using System.Text
 @model EditCinemaHallViewModel
+@inject SignInManager<ApplicationUser> SiginInManager
 
 <div class="container align-items-center">
     <div class="row mt-4">
@@ -23,12 +24,14 @@
             </div>
         }
     </div>
-    <form asp-controller="CinemaHall" asp-action="Edit" method="get" class="d-flex">
-        <input asp-for="CinemaHallId" type="hidden" value="@Model.CinemaHall.Id">
-        <input asp-for="SeatId" id="SeatId" type="hidden">
-        <button type="submit" class="btn btn-primary">Edit Seat</button>
-    </form>
-    
+    @if (User.IsInRole("Admin"))
+    {
+        <form asp-controller="CinemaHall" asp-action="Edit" method="get" class="d-flex">
+            <input asp-for="CinemaHallId" type="hidden" value="@Model.CinemaHall.Id">
+            <input asp-for="SeatId" id="SeatId" type="hidden">
+            <button type="submit" class="btn btn-primary">Edit Seat</button>
+        </form>
+    }
     <script>
         var seatInput = document.getElementById("SeatId");
         function f(val) {

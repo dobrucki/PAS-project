@@ -1,5 +1,6 @@
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PAS_project.Models.Entities;
 using PAS_project.Models.Managers;
@@ -7,60 +8,21 @@ using PAS_project.ViewModels;
 
 namespace PAS_project.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class UserController: Controller
     {
         private readonly UserManager _userManager;
         private readonly CinemaEventManager _cinemaEventManager;
+        private readonly UserManager<ApplicationUser> _applicationUserManager;
 
-        public UserController(UserManager userManager, CinemaEventManager cinemaEventManager)
+        public UserController(UserManager userManager, 
+            CinemaEventManager cinemaEventManager, UserManager<ApplicationUser> applicationUserManager)
         {
             _userManager = userManager;
             _cinemaEventManager = cinemaEventManager;
+            _applicationUserManager = applicationUserManager;
         }
         
-        [HttpGet]
-        public ViewResult CreateStandard()
-        {
-            return View();
-        }
-        
-        [HttpPost] 
-        public IActionResult CreateStandard(ApplicationUser applicationUser)
-        {
-            var userWithThisEmail = _userManager.GetAllUsers().FirstOrDefault(e => e.Email.Equals(applicationUser.Email));
-            if (userWithThisEmail != null && userWithThisEmail.Id != applicationUser.Id)
-            {
-                ModelState.AddModelError("Email", "User with this email already exist.");
-            }
-            var ms = ModelState;
-            ms.Remove("PhoneNumber");
-            if (!ms.IsValid) return View();
-            _userManager.AddUser(applicationUser);
-            TempData["comment"] = $"Successfully added new user ID: {applicationUser.Id}";
-            return RedirectToAction("All");
-        }
-        [HttpGet]
-        public ViewResult CreateVip()
-        {
-            return View();
-        }
-        
-        [HttpPost] 
-        public IActionResult CreateVip(ApplicationUser applicationUser)
-        {
-            var userWithThisEmail = _userManager.GetAllUsers().FirstOrDefault(e => e.Email.Equals(applicationUser.Email));
-            if (userWithThisEmail != null && userWithThisEmail.Id != applicationUser.Id)
-            {
-                ModelState.AddModelError("Email", "User with this email already exist.");
-            }
-            if (!ModelState.IsValid) return View();
-            applicationUser.UserType = Models.Entities.ApplicationUser.VipUserType;
-            _userManager.AddUser(applicationUser);
-            TempData["comment"] = $"Successfully added new user ID: {applicationUser.Id}";
-            return RedirectToAction("All");
-        }
-
         public ActionResult All([FromQuery]string email)
         {
             if (email == null) return View(_userManager.GetAllUsers().ToList());
@@ -135,7 +97,8 @@ namespace PAS_project.Controllers
           Id = id.Value,
           ApplicationUser = user,
           Type = user.UserType.ToString(),
-          Activity = user.Active
+          Activity = user.Active,
+          Role = user.ApplicationRole.Name
       };
 
       return View(user.UserType.ToString().Equals("Vip") ? "~/Views/User/EditVip.cshtml" : "~/Views/User/EditStandard.cshtml", editUser);
@@ -158,7 +121,16 @@ namespace PAS_project.Controllers
 
               eUser.ApplicationUser.Id = eUser.Id;
               eUser.ApplicationUser.UserType = Models.Entities.ApplicationUser.StandardUserType;
+              eUser.ApplicationUser.ApplicationRole = new ApplicationRole
+              {
+                  Name = eUser.Role
+              };
               eUser.ApplicationUser.Active = eUser.Activity;
+//              if (eUser.Activity is false)
+//                  eUser.ApplicationUser.ApplicationRole = new ApplicationRole
+//                  {
+//                      Name = "NonActiveUser"
+//                  };
               _userManager.UpdateUser(eUser.ApplicationUser);
               
           }
@@ -177,8 +149,11 @@ namespace PAS_project.Controllers
               eUser.ApplicationUser.Id = eUser.Id;
               eUser.ApplicationUser.UserType = Models.Entities.ApplicationUser.VipUserType;
               eUser.ApplicationUser.Active = eUser.Activity;
+              eUser.ApplicationUser.ApplicationRole = new ApplicationRole
+              {
+                  Name = eUser.Role
+              };
               _userManager.UpdateUser(eUser.ApplicationUser);
-              
           }
           else
           {

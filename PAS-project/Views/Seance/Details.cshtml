@@ -16,11 +16,17 @@
     
         </div>
     <div class="row px-2 d-flex justify-content-center">
-        <button onclick="location.href='@Url.Action("Edit", "Seance", new {id = Model.Id})'"
-            class="btn btn-lg btn-info mx-4">Edit</button>
-        <button onclick="location.href='@Url.Action("Book", "Seance", new {id = Model.Id})'" 
-                class="btn btn-lg btn-primary mx-4">Book it</button>
-        <button onclick="location.href='@Url.Action("Delete", "Seance", new {id = Model.Id})'"
-            class="btn btn-lg btn-danger mx-4">Delete</button>
+        @if (User.IsInRole("Admin"))
+        {
+            <button onclick="location.href='@Url.Action("Edit", "Seance", new {id = Model.Id})'"
+                    class="btn btn-lg btn-info mx-4">Edit</button>
+            <button onclick="location.href='@Url.Action("Delete", "Seance", new {id = Model.Id})'"
+                    class="btn btn-lg btn-danger mx-4">Delete</button>
+        }
+        @if (User.IsInRole("Admin") || User.IsInRole("User"))
+        {
+            <button onclick="location.href='@Url.Action("Book", "Seance", new {id = Model.Id})'"
+                    class="btn btn-lg btn-primary mx-4">Book it</button>
+        }
     </div>
 </div>}

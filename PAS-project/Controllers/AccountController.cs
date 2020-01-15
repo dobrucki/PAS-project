@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +9,7 @@ using PAS_project.ViewModels;
 
 namespace PAS_project.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="User,Admin")]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -40,11 +41,16 @@ namespace PAS_project.Controllers
                     LastName = vm.LastName,
                     UserName = vm.Email,
                     Email = vm.Email,
+                    ApplicationRole = new ApplicationRole
+                    {
+                        Name = "NonActiveUser"
+                    }
                 };
                 var result = await _userManager.CreateAsync(user, vm.Password);
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, false);
+                    TempData["comment"] = 
+                        $"Successfully created an account, but it still needs to be activated. ";
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -58,6 +64,7 @@ namespace PAS_project.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> SignOut()
         {
             await _signInManager.SignOutAsync();
@@ -80,7 +87,6 @@ namespace PAS_project.Controllers
             {
                 var result = await _signInManager
                     .PasswordSignInAsync(vm.Email, vm.Password, false, false);
-
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");

@@ -7,7 +7,7 @@ using PAS_project.ViewModels;
 
 namespace PAS_project.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="User,Admin")]
     public class CinemaHallController : Controller
     {
         private readonly CinemaHallManager _cinemaHallManager;

@@ -2,14 +2,18 @@
     
     ViewBag.Title = "Home";
 }
-<div class="jumbotron jumbotron-fluid">
-    <div class="container px-5">
-        <h1 class="display-4">
-            Witaj w PAS_Cinema!
-        </h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-            A ipsa non sit voluptatum! Accusantium atque facere ipsa laudantium quasi. 
-            A architecto corporis cum deserunt eos mollitia obcaecati similique ullam, voluptatum!</p>
-        <p><a href="#" class="btn btn-primary btn-lg" role="button">Załóż konto!</a></p>
+@inject SignInManager<ApplicationUser> SignInManager;
+@if (!SignInManager.IsSignedIn(User))
+{
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container px-5">
+            <h1 class="display-4">
+                Witaj w PAS_Cinema!
+            </h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                A ipsa non sit voluptatum! Accusantium atque facere ipsa laudantium quasi.
+                A architecto corporis cum deserunt eos mollitia obcaecati similique ullam, voluptatum!</p>
+            <p><a href="#" class="btn btn-primary btn-lg" role="button">Załóż konto!</a></p>
+        </div>
     </div>
-</div>
+}

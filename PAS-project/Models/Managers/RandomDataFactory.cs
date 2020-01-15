@@ -37,7 +37,11 @@ namespace PAS_project.Models.Managers
                 Email = email,
                 Password = "AQAAAAEAACcQAAAAELchcUyDbMj+/SMAB1IOBEijR4b4UoHGpJTK8A7qokIVX4uHE0Jmjwypltx/sdyn5w==",
                 UserName = email,
-                Active = true
+                Active = true,
+                ApplicationRole = new ApplicationRole
+                {
+                    Name = "Admin"
+                }
             };
         }
 

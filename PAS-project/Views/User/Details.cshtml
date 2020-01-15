@@ -31,11 +31,7 @@
             </tr>
             <tr>
                 <td class="font-weight-bold">User acces level</td>
-                <td>@Model.ApplicationUser.AccessLevel</td>
-            </tr>
-            <tr>
-                <td class="font-weight-bold">Active</td>
-                <td>@Model.ApplicationUser.Active</td>
+                <td>@Model.ApplicationUser.ApplicationRole.Name</td>
             </tr>
             @if (! string.IsNullOrEmpty(Model.ApplicationUser.PhoneNumber))
             {
@@ -83,20 +79,20 @@
                     }
         
 
-        @if (!Model.ApplicationUser.Active)
-        {
-            <button onclick="location.href = '@(Url.Action("Activate", "User", new {Model.ApplicationUser.Id}))'"
-                    class="btn btn-lg btn-success mx-4">
-                Activate
-            </button>
-        }
-        @if (Model.ApplicationUser.Active)
-        {
-            <button onclick="location.href = '@(Url.Action("Deactivate", "User", new {Model.ApplicationUser.Id}))';"
-                    class="btn btn-lg btn-danger mx-4">
-                Deactivate
-            </button>
-        }
+@*         @if (!Model.ApplicationUser.Active) *@
+@*         { *@
+@*             <button onclick="location.href = '@(Url.Action("Activate", "User", new {Model.ApplicationUser.Id}))'" *@
+@*                     class="btn btn-lg btn-success mx-4"> *@
+@*                 Activate *@
+@*             </button> *@
+@*         } *@
+@*         @if (Model.ApplicationUser.Active) *@
+@*         { *@
+@*             <button onclick="location.href = '@(Url.Action("Deactivate", "User", new {Model.ApplicationUser.Id}))';" *@
+@*                     class="btn btn-lg btn-danger mx-4"> *@
+@*                 Deactivate *@
+@*             </button> *@
+@*         } *@
     </div>
 
 

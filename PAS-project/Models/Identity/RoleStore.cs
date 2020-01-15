@@ -14,6 +14,21 @@ namespace PAS_project.Models.Identity
         public RoleStore(IDataRepository<ApplicationRole> repository)
         {
             _repository = repository;
+            var userRole = new ApplicationRole
+            {
+                Name = "User"
+            };
+            var adminRole = new ApplicationRole
+            {
+                Name = "Admin"
+            };
+            var employeeRole = new ApplicationRole
+            {
+                Name = "Employee"
+            };
+            repository.Add(adminRole);
+            repository.Add(employeeRole);
+            repository.Add(userRole);
         }
 
         public void Dispose()

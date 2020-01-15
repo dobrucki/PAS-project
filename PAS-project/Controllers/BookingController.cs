@@ -9,7 +9,7 @@ using PAS_project.ViewModels;
 
 namespace PAS_project.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="User,Admin")]
     public class BookingController : Controller
     {
         private readonly CinemaEventManager _cinemaEventManager;

@@ -1,13 +1,17 @@
 @model IEnumerable<Seance>;
+@inject SignInManager<ApplicationUser> SignInManager;
 @{
     ViewData["Title"] = "Seances";
 }
 
 <div class="container list-group mt-4">
-    <div class="row p-2 justify-content-center align-items-center">
-    <button class="btn btn-lg btn-success col-sm-2" 
-            onclick="location.href='@(Url.Action("Add", "Seance"))'">Add new Seance</button>
-    </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="row p-2 justify-content-center align-items-center">
+            <button class="btn btn-lg btn-success col-sm-2"
+                    onclick="location.href='@(Url.Action("Add", "Seance"))'">Add new Seance</button>
+        </div>
+    }
     <form class="input-group" asp-controller="Seance" asp-action="All" method="get">
         <input type="text" name="title" class="form-control" placeholder="Search by movie title">
         <div class="input-group-append">

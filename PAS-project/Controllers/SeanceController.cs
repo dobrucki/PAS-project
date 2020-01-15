@@ -9,7 +9,7 @@ using PAS_project.ViewModels;
 
 namespace PAS_project.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="User,Admin")]
     public class SeanceController : Controller
     {
         private readonly SeanceManager _seanceManager;
